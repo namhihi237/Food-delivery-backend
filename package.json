@@ -1,0 +1,41 @@
+{
+  "name": "FOOD_DELIVERY_BACKEND",
+  "version": "1.0.0",
+  "description": "graduate project - 2022",
+  "main": "index.js",
+  "author": "Le Trung Nam",
+  "license": "MIT",
+  "scripts": {
+    "dev": "nodemon -r esm ./app.js",
+    "start": "node -r esm ./app.js",
+    "sync-db": "node -r esm ./migrations/sync-db.js"
+  },
+  "dependencies": {
+    "apollo-server-express": "^3.3.0",
+    "app-root-path": "^3.0.0",
+    "bcrypt": "^5.0.1",
+    "bluebird": "^3.7.2",
+    "cloudinary": "^1.27.0",
+    "cors": "^2.8.5",
+    "dotenv": "^10.0.0",
+    "esm": "^3.2.25",
+    "express": "^4.17.1",
+    "graphql": "^15.6.0",
+    "jsonwebtoken": "^8.5.1",
+    "lodash": "^4.17.21",
+    "moment": "^2.29.1",
+    "mysql2": "^2.3.0",
+    "path": "^0.12.7",
+    "redis": "^3.1.2",
+    "sequelize": "^6.6.5",
+    "sequelize-cli": "^6.2.0",
+    "winston": "^3.3.3",
+    "winston-daily-rotate-file": "^4.5.5"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.7.0",
+    "nodemon": "^2.0.12",
+    "prettier": "^2.4.1"
+  }
+}
