@@ -11,4 +11,6 @@ export const envVariable = {
   FIREBASE_URL: process.env.FIREBASE_URL || '',
   CLIENT_ID: process.env.CLIENT_ID || '',
   DATABASE_URL: process.env.DATABASE_URL || 'mysql://root:@localhost:3306/food-delivery',
+  EMAIL: process.env.EMAIL || '',
+  EMAIL_PASSWORD: process.env.EMAIL_PASSWORD || '',
 };
