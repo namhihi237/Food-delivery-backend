@@ -26,7 +26,7 @@ const authenticationMutation = {
     });
 
     // send email active account
-    await emailUtils.sendEmailActive({ email });
+    await emailUtils.sendEmailActive(newUser);
 
     return newUser;
   }

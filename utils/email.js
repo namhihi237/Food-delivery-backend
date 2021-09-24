@@ -1,6 +1,7 @@
 import nodemailer from 'nodemailer';
 import { envVariable } from '../configs';
 import randomUtils from './random';
+import jwtUtils from './jsonwebtoken';
 import path from 'path';
 import ejs from 'ejs';
 class EmailUtils {
@@ -31,10 +32,11 @@ class EmailUtils {
   async sendEmailActive(options) {
     let templateFile = '/api/active-user.ejs';
 
+    const token = await jwtUtils.encodeToken({ id: options.id });
     // render HTML from file path
     const html = await ejs.renderFile(`${this.templatePath}${templateFile}`, {
       templatePath: this.templatePath,
-      code: randomUtils.randomCode(6)
+      activeLink: `${envVariable.clientUrl}verify-email?token=${token}`
     }, {
       filename: 'active-user'
     });

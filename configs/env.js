@@ -13,4 +13,5 @@ export const envVariable = {
   DATABASE_URL: process.env.DATABASE_URL || 'mysql://root:@localhost:3306/food-delivery',
   EMAIL: process.env.EMAIL || '',
   EMAIL_PASSWORD: process.env.EMAIL_PASSWORD || '',
+  clientUrl: process.env.CLIENT_URL || 'http://localhost/',
 };
