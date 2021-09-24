@@ -8,18 +8,20 @@ import { sequelize } from './db.js';
  */
 const Admin = sequelize.define('Admin', {
   id: {
-    type: Sequelize.STRING(80),
+    type: Sequelize.UUID,
     primaryKey: true,
-    validate: {
-      len: [0, 80]
-    }
+    defaultValue: Sequelize.UUIDV1,
   },
   userName: {
     type: Sequelize.STRING(200),
-    allowNull: true,
+    allowNull: false,
     validate: {
       len: [0, 200]
     }
+  },
+  fullName: {
+    type: Sequelize.STRING(200),
+    allowNull: true,
   },
   password: {
     type: Sequelize.STRING(100),
@@ -29,11 +31,9 @@ const Admin = sequelize.define('Admin', {
     }
   },
   role: {
-    type: Sequelize.STRING(50),
+    type: Sequelize.ENUM('admin', 'employee'),
     allowNull: false,
-    validate: {
-      len: [0, 50]
-    }
+    defaultValue: 'employee'
   },
   lastLogin: {
     type: Sequelize.DATE,
