@@ -1,7 +1,8 @@
 import nodemailer from 'nodemailer';
-import constants from '../config/constants';
 import { envVariable } from '../configs';
-
+import randomUtils from './random';
+import path from 'path';
+import ejs from 'ejs';
 class EmailUtils {
   constructor() {
     this.transporter = nodemailer.createTransport({
@@ -13,20 +14,33 @@ class EmailUtils {
         pass: envVariable.EMAIL_PASSWORD,
       },
     });
+
+    this.templatePath = path.normalize(`${process.cwd()}/views/email-templates/`);
   }
 
   async sendEmail(options) {
     const mailOptions = {
-      from: constants.EMAIL_USER,
+      from: envVariable.EMAIL,
       to: options.email,
       subject: options.subject,
-      text: options.text,
+      html: options.html
     };
     return this.transporter.sendMail(mailOptions);
   }
 
   async sendEmailActive(options) {
+    let templateFile = '/api/active-user.ejs';
+
+    // render HTML from file path
+    const html = await ejs.renderFile(`${this.templatePath}${templateFile}`, {
+      templatePath: this.templatePath,
+      code: randomUtils.randomCode(6)
+    }, {
+      filename: 'active-user'
+    });
+
     options.subject = 'Active your account';
+    options.html = html;
     return this.sendEmail(options);
   }
 }

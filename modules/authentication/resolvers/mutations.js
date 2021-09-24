@@ -1,4 +1,4 @@
-import {bcryptUtils} from '../../../utils';
+import { bcryptUtils, emailUtils } from '../../../utils';
 
 const authenticationMutation = {
   register: async (parent, args, context, info) => {
@@ -19,11 +19,16 @@ const authenticationMutation = {
     const hashPassword = await bcryptUtils.hashPassword(password);
 
     // create user
-    return context.db.Users.create({
+    const newUser = await context.db.Users.create({
       email,
       fullName,
       password: hashPassword
     });
+
+    // send email active account
+    await emailUtils.sendEmailActive({ email });
+
+    return newUser;
   }
 }
 

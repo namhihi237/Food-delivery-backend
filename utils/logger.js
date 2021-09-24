@@ -4,16 +4,16 @@ import DailyRotateFile from 'winston-daily-rotate-file';
 const { combine, timestamp, printf } = format;
 
 const myFormat = printf(({ level, message, timestamp }) => {
-	switch (level) {
-		case 'info':
-			return `\x1b[32m[${level}]: ${timestamp}  ${message}`;
-		case 'debug':
-			return `\x1b[35m[${level}]: ${timestamp}  ${message}`;
-		case 'warn':
-			return `\x1b[33m[${level}]: ${timestamp}  ${message}`;
-		case 'error':
-			return `\x1b[31m[${level}]: ${timestamp}  ${message}`;
-	}
+  switch (level) {
+    case 'info':
+      return `${level}]: ${timestamp}  ${message}`;
+    case 'debug':
+      return `\x1b[35m[${level}]: ${timestamp}  ${message}`;
+    case 'warn':
+      return `\x1b[33m[${level}]: ${timestamp}  ${message}`;
+    case 'error':
+      return `\x1b[31m[${level}]: ${timestamp}  ${message}`;
+  }
 });
 
 const options = {
@@ -32,8 +32,8 @@ const options = {
 };
 
 const logger = winston.createLogger({
-	format: combine(timestamp(), myFormat),
-	exitOnError: false, // do not exit on handled exceptions
+  format: combine(timestamp(), myFormat),
+  exitOnError: false, // do not exit on handled exceptions
 });
 
 logger.configure({
