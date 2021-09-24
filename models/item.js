@@ -25,6 +25,10 @@ const Item = sequelize.define('Item', {
     type: Sequelize.FLOAT,
     allowNull: true,
   },
+  numberOfReviews: {
+    type: Sequelize.INTEGER,
+    defaultValue: 0,
+  },
   description: {
     type: Sequelize.STRING(500),
     validate: {

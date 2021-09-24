@@ -6,10 +6,11 @@ export default gql`
     email: String!
     fullName: String!
     phoneNumber: String
-    birthDay: String
-    image: String
-    role: String!
-    point: Int!
+    image: String!
+    role: String
+    point: Int
+    address: String
+    promoCode: String
   }
 
   type Admin {

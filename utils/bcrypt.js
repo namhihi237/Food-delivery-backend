@@ -1,13 +1,14 @@
 import { hash, compare } from 'bcrypt';
+class BcryptUtils {
+	async hashPassword(password) {
+		return hash(password, 12);
+	}
 
-const hashPassword = async (password) => {
-	return hash(password, 12);
-};
+	async comparePassword(password, hashPassword) {
+		const match = await compare(password, hashPassword);
+		if (!match) return false;
+		else return true;
+	}
+}
 
-const comparePassword = async (password, hashPassword) => {
-	const match = await compare(password, hashPassword);
-	if (!match) return false;
-	else return true;
-};
-
-export { hashPassword, comparePassword };
+export default new BcryptUtils();

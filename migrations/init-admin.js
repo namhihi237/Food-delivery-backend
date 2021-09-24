@@ -1,4 +1,4 @@
-import {hashPassword} from '../utils'
+import {bcryptUtils} from '../utils'
 
 import models from '../models/index.js';
 
@@ -9,7 +9,7 @@ models()
   .then(db => db.sequelize.transaction(async t => {
 
     let options = { raw: true, transaction: t };
-    const password = await hashPassword(process.env.ADMIN_PASSWORD_SEED);
+    const password = await bcryptUtils.hashPassword(process.env.ADMIN_PASSWORD_SEED);
     return db.Admins.create({
       userName: 'admin',
       fullName: 'Admin',

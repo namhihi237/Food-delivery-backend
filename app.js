@@ -4,7 +4,7 @@ import typeDefs from './schemaGraphql';
 import resolvers from './modules';
 const pathServer = '/api/v1/graphql';
 import { envVariable } from './configs';
-import { logger, jwt } from './utils';
+import { logger, jwtUtils } from './utils';
 import AppContext from './configs/context';
 import _ from 'lodash';
 import cors from 'cors';
@@ -36,10 +36,10 @@ export const startServer = async () => {
         user = null;
       token = req.headers.authorization ? req.headers.authorization.split(' ')[1] : null;
       try {
-        user = await jwt.verify(token);
+        user = await jwtUtils.verify(token);
       } catch (error) {}
 
-      return { user: _.get(user, 'data') };
+      return { user: _.get(user, 'data') , db };
     }
   });
 
@@ -48,6 +48,7 @@ export const startServer = async () => {
 
   global.appContext = new AppContext();
   global.redisClient = redisClient;
+  global.logger = logger;
   // seed(); // initialize database
 
   app.listen({ port: envVariable.PORT }, () => logger.info(`🚀 Server ready ${server.graphqlPath} port ${envVariable.PORT}`));

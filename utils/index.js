@@ -1,6 +1,6 @@
 import logger from './logger';
-import jwt from './jsonwebtoken';
-import { hashPassword, comparePassword } from './bcrypt';
+import jwtUtils from './jsonwebtoken';
+import bcryptUtils from './bcrypt';
 import redisUtils from './redis';
 
-export { logger, jwt, comparePassword, hashPassword, redisUtils };
+export { logger, jwtUtils, bcryptUtils, redisUtils };
