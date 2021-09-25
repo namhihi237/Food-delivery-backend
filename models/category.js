@@ -27,7 +27,7 @@ const Category = sequelize.define('Category', {
 });
 
 Category.associate = models => {
-  Category.hasMany(models.Items, { as: 'items' });
+  // Category.hasMany(models.Items, { as: 'items' });
 }
 
 export default Category;

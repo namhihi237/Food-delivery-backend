@@ -48,6 +48,7 @@ Item.associate = models => {
   Item.hasMany(models.OrderItems, { as: 'orderItems' });
   Item.hasMany(models.Reviews, { as: 'reviews' });
   Item.hasMany(models.CartItems, { as: 'cartItems' });
+  Item.belongsTo(models.Categories, { as: 'categories', foreignKey: 'categoryId' });
 }
 
 export default Item;
