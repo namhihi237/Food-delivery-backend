@@ -53,6 +53,11 @@ const authenticationMutation = {
       throw new Error('Password is incorrect');
     }
 
+    // check if user is active
+    if (!user.active) {
+      throw new Error('User is not active!');
+    }
+
     // create token
     const token = await jwtUtils.encodeToken(_.pick(user, ['id', 'email']));
 
