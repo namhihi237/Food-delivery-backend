@@ -13,6 +13,12 @@ export default gql`
     promoCode: String
   }
 
+  type Category {
+    id: ID!
+    name: String!
+    image: String
+  }
+
   type Admin {
     id: ID!
     userName: String!
@@ -22,6 +28,7 @@ export default gql`
   type Query {
     user(id: ID!): User!
     getMe: User!
+    getCategories: [Category!]!
   }
 
   type Mutation {
