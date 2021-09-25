@@ -6,7 +6,7 @@ export default gql`
     email: String!
     fullName: String!
     phoneNumber: String
-    image: String!
+    image: String
     role: String
     point: Int
     address: String
@@ -32,11 +32,6 @@ export default gql`
 
   type JWTResponse {
     user: User!
-    token: String!
-  }
-
-  type JWTResponseAdmin {
-    user: Admin!
     token: String!
   }
 
