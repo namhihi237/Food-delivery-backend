@@ -19,6 +19,15 @@ export default gql`
     image: String
   }
 
+  type Review {
+    id: ID!
+    user: User!
+    comment: String!
+    rating: Int!
+    image: String
+    createdAt: String!
+  }
+
   type Item {
     id: ID!
     name: String!
@@ -27,6 +36,7 @@ export default gql`
     category: Category
     description: String
     rating: Int
+    reviews: [Review]
   }
 
   type resultItems {
@@ -45,6 +55,7 @@ export default gql`
     getMe: User!
     getCategories: [Category!]!
     getItems(skip: Int, limit: Int, filter: itemFilter, orderBy: OrderByList ): resultItems!
+    getItem(id: ID!): Item!
   }
 
   type Mutation {

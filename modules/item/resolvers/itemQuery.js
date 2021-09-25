@@ -30,7 +30,14 @@ const itemQuery = {
     const total = await context.db.Items.count(options);
 
     return { total, items };
+  },
 
+  getItem: async (parent, args, context, info) => {
+    global.logger.info('authenticationMutation::getItem' + JSON.stringify(args));
+
+    return context.db.Items.findOne({
+      where: { id: args.id }
+    });
   }
 }
 
