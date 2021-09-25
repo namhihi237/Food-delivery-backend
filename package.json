@@ -43,5 +43,8 @@
     "babel-preset-env": "^1.7.0",
     "nodemon": "^2.0.12",
     "prettier": "^2.4.1"
+  },
+  "engines": {
+    "node": "15.x"
   }
 }

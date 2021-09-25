@@ -10,7 +10,6 @@ import { envVariable } from './configs';
 import { logger, jwtUtils } from './utils';
 import models from './models';
 import { authenticationRouter } from './routers';
-import fs from "fs";
 
 const pathServer = '/api/v1/graphql';
 
@@ -55,9 +54,9 @@ export const startServer = async () => {
   // seed(); // initialize database
 
   app.listen({ port: envVariable.PORT }, () => {
+    console.info(`Server run environment ${process.env.NODE_ENV || "dev"}`)
     logger.info(`🚀 Server ready at http://localhost:${envVariable.PORT}${server.graphqlPath}`);
   });
 };
 
 startServer();
-///https://localhost:8000/api/v1/graphql
