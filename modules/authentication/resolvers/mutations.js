@@ -54,7 +54,7 @@ const authenticationMutation = {
     }
 
     // check if user is active
-    if (!user.active) {
+    if (!user.isActive) {
       throw new Error('User is not active!');
     }
 
