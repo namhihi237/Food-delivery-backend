@@ -8,9 +8,9 @@ import { sequelize } from './db.js';
  */
 const Category = sequelize.define('Category', {
   id: {
-    type: Sequelize.UUID,
+    type: Sequelize.INTEGER,
+    autoIncrement: true,
     primaryKey: true,
-    defaultValue: Sequelize.UUIDV1,
   },
   name: {
     type: Sequelize.STRING(100),

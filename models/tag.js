@@ -8,9 +8,9 @@ import { sequelize } from './db.js';
  */
 const Tag = sequelize.define('Tag', {
   id: {
-    type: Sequelize.UUID,
+    type: Sequelize.INTEGER,
     primaryKey: true,
-    defaultValue: Sequelize.UUIDV1,
+    autoIncrement: true
   },
   name: {
     type: Sequelize.STRING(100),
@@ -21,7 +21,7 @@ const Tag = sequelize.define('Tag', {
 });
 
 Tag.associate = models => {
-  Tag.belongsToMany(models.Items, {through: 'ItemTags'});
+  Tag.belongsToMany(models.Items, { through: 'ItemTags' });
 }
 
 export default Tag;

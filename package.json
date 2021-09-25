@@ -9,7 +9,8 @@
     "dev": "nodemon -r esm ./app.js",
     "start": "node -r esm ./app.js",
     "sync-db": "node -r esm ./migrations/sync-db.js",
-    "init-admin": "node -r esm ./migrations/init-admin.js"
+    "init-admin": "node -r esm ./migrations/init-admin.js",
+    "init-db": "node -r esm ./migrations/init-db.js"
   },
   "dependencies": {
     "apollo-server-express": "^3.3.0",
