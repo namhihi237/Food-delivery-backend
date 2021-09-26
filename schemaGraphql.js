@@ -39,6 +39,12 @@ export default gql`
     reviews: [Review]
   }
 
+  type CartItem {
+    id: ID!
+    item: Item!
+    quantity: Int!
+  }
+
   type resultItems {
     items: [Item]!
     total: Int!
@@ -56,6 +62,7 @@ export default gql`
     getCategories: [Category!]!
     getItems(skip: Int, limit: Int, filter: itemFilter, orderBy: OrderByList ): resultItems!
     getItem(id: ID!): Item!
+    getCartItems: [CartItem!]!
   }
 
   type Mutation {

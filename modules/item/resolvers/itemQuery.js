@@ -20,10 +20,7 @@ const itemQuery = {
 
     global.logger.info('itemQuery.getItems options' + JSON.stringify(options));
 
-    let items = await context.db.Items.findAll({
-      ...options,
-      order: [['id', 'ASC']]
-    });
+    let items = await context.db.Items.findAll(options);
 
     items = JSON.parse(JSON.stringify(items));
 
@@ -38,6 +35,34 @@ const itemQuery = {
     return context.db.Items.findOne({
       where: { id: args.id }
     });
+  },
+
+  getCartItems: async (parent, args, context, info) => {
+    global.logger.info('authenticationMutation::getCartItems' + JSON.stringify(args));
+
+    // check token header
+    if (!context.user) {
+      throw new Error('Token is invalid');
+    }
+    console.log('context.user', context.user);
+
+    let cartItems = await context.db.CartItems.findAll({
+      where: { UserId: context.user.id },
+      include: {
+        model: context.db.Items,
+        as: 'items'
+      }
+    });
+
+    cartItems = JSON.parse(JSON.stringify(cartItems));
+
+    cartItems = cartItems.map(cartItem => {
+      cartItem.item = JSON.parse(JSON.stringify(cartItem.items));
+      delete cartItem.items;
+      return cartItem;
+    });
+
+    return cartItems;
   }
 }
 

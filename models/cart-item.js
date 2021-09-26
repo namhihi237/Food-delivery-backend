@@ -12,12 +12,20 @@ const CartItem = sequelize.define('CartItem', {
     primaryKey: true,
     defaultValue: Sequelize.UUIDV1
   },
-  quality: {
+  quantity: {
     type: Sequelize.INTEGER,
     validate: {
       min: 1,
     }
   },
 });
+
+CartItem.associate = models => {
+  CartItem.belongsTo(models.Items);
+}
+
+CartItem.associate = models => {
+  CartItem.belongsTo(models.Items, { as: 'items', foreignKey: 'itemId' });
+}
 
 export default CartItem;

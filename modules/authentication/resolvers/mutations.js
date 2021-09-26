@@ -58,6 +58,9 @@ const authenticationMutation = {
       throw new Error('User is not active!');
     }
 
+    // update lastLogin
+    await context.db.Users.update({ lastLogin: new Date() }, { where: { id: user.id } });
+
     // create token
     const token = await jwtUtils.encodeToken(_.pick(user, ['id', 'email']));
 

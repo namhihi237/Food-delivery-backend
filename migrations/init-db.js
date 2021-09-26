@@ -1,4 +1,5 @@
 import models from '../models';
+import { bcryptUtils } from '../utils';
 
 const categories = [
   {
@@ -75,6 +76,25 @@ const initDb = async () => {
     // create new data
     await db.Categories.bulkCreate(categories);
     await db.Items.bulkCreate(items);
+
+    // create user 
+
+    const password = await bcryptUtils.hashPassword('123456');
+    const user = await db.Users.create({
+      email: 'yentth237@gmail.com',
+      password,
+      fullName: 'Le Trung Nam',
+      isActive: true,
+    });
+
+    const item = await db.Items.findOne();
+
+    // create cart item
+    await db.CartItems.create({
+      UserId: user.id,
+      itemId: item.id,
+      quantity: 12,
+    });
 
     await db.sequelize.query('SET FOREIGN_KEY_CHECKS = 1');
     console.log('Init database success!');

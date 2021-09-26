@@ -23,7 +23,7 @@ const OrderItem = sequelize.define('OrderItem', {
       min: 0,
     }
   },
-  quality: {
+  quantity: {
     type: Sequelize.INTEGER,
     allowNull: false,
     validate: {
