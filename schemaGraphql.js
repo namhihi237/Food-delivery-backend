@@ -71,6 +71,9 @@ export default gql`
     logout: Boolean!
     addToCart(itemId: ID!, quantity: Int!): CartItem!
     deleteCartItem(id: ID!): Boolean!
+    getCodeActivePhoneNumber(phoneNumber: String!): Boolean!
+    activePhoneNumber(phoneNumber: String!, code: String!): Boolean!
+
   }
 
   type JWTResponse {

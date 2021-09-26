@@ -22,7 +22,7 @@ const CodeReset = sequelize.define('CodeReset', {
   phoneNumber: {
     type: Sequelize.STRING(20),
     validate: {
-      len: [0, 10]
+      len: [0, 20]
     }
   },
   code: {
