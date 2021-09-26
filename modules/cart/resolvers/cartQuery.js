@@ -17,12 +17,6 @@ const cartQuery = {
 
     cartItems = JSON.parse(JSON.stringify(cartItems));
 
-    cartItems = cartItems.map(cartItem => {
-      cartItem.item = JSON.parse(JSON.stringify(cartItem.items));
-      delete cartItem.items;
-      return cartItem;
-    });
-
     return cartItems;
   }
 }

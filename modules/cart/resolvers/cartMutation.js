@@ -34,7 +34,6 @@ const cartMutation = {
     }
 
     cartItem = JSON.parse(JSON.stringify(cartItem));
-    console.log('cartItem', cartItem);
 
     return cartItem;
 
