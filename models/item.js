@@ -8,9 +8,10 @@ import { sequelize } from './db.js';
  */
 const Item = sequelize.define('Item', {
   id: {
-    type: Sequelize.UUID,
+    type: Sequelize.INTEGER,
     primaryKey: true,
-    defaultValue: Sequelize.UUIDV1,
+    unique: true,
+    autoIncrement: true
   },
   name: {
     type: Sequelize.STRING(250),
@@ -44,9 +45,10 @@ const Item = sequelize.define('Item', {
 });
 
 Item.associate = models => {
-  Item.belongsToMany(models.Tags, {through: 'ItemTags'});
-  Item.hasMany(models.OrderItems, {as: 'orderItems'});
-  Item.hasMany(models.Reviews, {as: 'reviews'});
+  Item.belongsToMany(models.Tags, { through: 'ItemTags' });
+  Item.hasMany(models.OrderItems, { as: 'orderItems' });
+  Item.hasMany(models.Reviews, { as: 'reviews' });
+  Item.belongsTo(models.Categories, { as: 'categories', foreignKey: 'categoryId' });
 }
 
 export default Item;

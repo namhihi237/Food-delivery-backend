@@ -18,10 +18,16 @@ const Category = sequelize.define('Category', {
       len: [0, 100]
     }
   },
+  image: {
+    type: Sequelize.STRING(100),
+    validate: {
+      len: [0, 100]
+    }
+  }
 });
 
 Category.associate = models => {
-  Category.hasMany(models.Items, { as: 'items' });
+  // Category.hasMany(models.Items, { as: 'items' });
 }
 
 export default Category;

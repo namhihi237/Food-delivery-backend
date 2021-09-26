@@ -98,10 +98,11 @@ const User = sequelize.define('User', {
 });
 
 User.associate = models => {
-  User.hasMany(models.Orders, {as: 'orders'});
-  User.hasMany(models.OrderItems, {as: 'orderItems'});
-  User.hasMany(models.Reviews, {as: 'reviews'});
-  User.hasMany(models.Notifications, { as: 'notifications'});
+  User.hasMany(models.Orders, { as: 'orders' });
+  User.hasMany(models.OrderItems, { as: 'orderItems' });
+  User.hasMany(models.Reviews, { as: 'reviews' });
+  User.hasMany(models.Notifications, { as: 'notifications' });
   User.hasMany(models.Messages, { as: 'messages' });
+  User.hasMany(models.CartItems, { as: 'cartItems' })
 }
 export default User;

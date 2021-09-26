@@ -8,9 +8,10 @@ import { sequelize } from './db.js';
  */
 const CodeReset = sequelize.define('CodeReset', {
   id: {
-    type: Sequelize.UUID,
+    type: Sequelize.INTEGER,
     primaryKey: true,
-    defaultValue: Sequelize.UUIDV1,
+    unique: true,
+    autoIncrement: true
   },
   email: {
     type: Sequelize.STRING(100),
@@ -21,7 +22,7 @@ const CodeReset = sequelize.define('CodeReset', {
   phoneNumber: {
     type: Sequelize.STRING(20),
     validate: {
-      len: [0, 10]
+      len: [0, 20]
     }
   },
   code: {
