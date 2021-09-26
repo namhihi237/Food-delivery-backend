@@ -93,7 +93,7 @@ const initDb = async () => {
     await db.CartItems.create({
       UserId: user.id,
       itemId: item.id,
-      quantity: 12,
+      quantity: 1,
     });
 
     await db.sequelize.query('SET FOREIGN_KEY_CHECKS = 1');

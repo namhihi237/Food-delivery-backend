@@ -69,6 +69,8 @@ export default gql`
     register(email: String!, fullName: String!, password: String!): User!
     login(email: String!, password: String!, firebaseIdentifier: String): JWTResponse!
     logout: Boolean!
+    addToCart(itemId: ID!, quantity: Int!): CartItem!
+    deleteCartItem(id: ID!): Boolean!
   }
 
   type JWTResponse {

@@ -8,9 +8,10 @@ import { sequelize } from './db.js';
  */
 const Item = sequelize.define('Item', {
   id: {
-    type: Sequelize.UUID,
+    type: Sequelize.INTEGER,
     primaryKey: true,
-    defaultValue: Sequelize.UUIDV1,
+    unique: true,
+    autoIncrement: true
   },
   name: {
     type: Sequelize.STRING(250),

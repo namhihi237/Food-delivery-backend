@@ -8,9 +8,10 @@ import { sequelize } from './db.js';
  */
 const CartItem = sequelize.define('CartItem', {
   id: {
-    type: Sequelize.UUID,
+    type: Sequelize.INTEGER,
     primaryKey: true,
-    defaultValue: Sequelize.UUIDV1
+    unique: true,
+    autoIncrement: true
   },
   quantity: {
     type: Sequelize.INTEGER,
