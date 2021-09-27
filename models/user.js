@@ -103,6 +103,7 @@ User.associate = models => {
   User.hasMany(models.Reviews, { as: 'reviews' });
   User.hasMany(models.Notifications, { as: 'notifications' });
   User.hasMany(models.Messages, { as: 'messages' });
-  User.hasMany(models.CartItems, { as: 'cartItems' })
+  User.hasMany(models.CartItems, { as: 'cartItems' });
+  User.hasMany(models.Vouchers, { as: 'vouchers' });
 }
 export default User;

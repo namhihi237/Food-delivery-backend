@@ -43,11 +43,35 @@ export default gql`
     id: ID!
     item: Item!
     quantity: Int!
+    createdAt: String!
   }
 
   type resultItems {
     items: [Item]!
     total: Int!
+  }
+  type OrderItem {
+    id: ID!
+    item: Item!
+    price: Int!
+    quantity: Int!
+  }
+
+  type Order {
+    id: ID!
+    subTotal: Int!
+    total: Int!
+    shipping: Int!
+    grandTotal: Int!
+    items: [OrderItem]!
+    discount: Int!
+    address: String!
+    phoneNumber: String!
+    name: String!
+    deliveryTime: String!
+    note: String!
+    status: String!
+    createdAt: String!
   }
 
   type Admin {
@@ -73,6 +97,7 @@ export default gql`
     deleteCartItem(id: ID!): Boolean!
     getCodeActivePhoneNumber(phoneNumber: String!): Boolean!
     activePhoneNumber(phoneNumber: String!, code: String!): Boolean!
+    checkout(method: methodEnum!, note: String, voucherCode: String ): Order!
 
   }
 
@@ -96,6 +121,11 @@ export default gql`
   enum OrderByEnum {
     asc
     desc
+  }
+
+  enum methodEnum {
+    COD
+    MOMO
   }
 
 `;

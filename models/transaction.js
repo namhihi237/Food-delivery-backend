@@ -16,7 +16,7 @@ const Transaction = sequelize.define('Transaction', {
     type: Sequelize.STRING(100),
     allowNull: true,
   },
-  mode: {
+  methodPayment: {
     type: Sequelize.ENUM,
     values: ['OFFLINE', 'COD', 'ONLINE'],
     allowNull: false
@@ -33,8 +33,8 @@ const Transaction = sequelize.define('Transaction', {
 });
 
 Transaction.associate = models => {
-  Transaction.belongsTo(models.Users, {foreignKey: 'userId', as: 'users'});
-  Transaction.belongsTo(models.Orders, {foreignKey: 'orderId', as: 'orders',});
+  Transaction.belongsTo(models.Users, { foreignKey: 'userId', as: 'users' });
+  Transaction.belongsTo(models.Orders, { foreignKey: 'orderId', as: 'orders', });
 }
 
 export default Transaction;

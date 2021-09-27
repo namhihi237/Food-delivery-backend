@@ -42,6 +42,17 @@ const Item = sequelize.define('Item', {
       len: [0, 250]
     }
   },
+  maxDiscount: {
+    type: Sequelize.FLOAT,
+    allowNull: true,
+    validate: {
+      min: 0,
+    }
+  },
+  isActive: {
+    type: Sequelize.BOOLEAN,
+    defaultValue: true,
+  }
 });
 
 Item.associate = models => {

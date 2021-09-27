@@ -30,10 +30,6 @@ const OrderItem = sequelize.define('OrderItem', {
       min: 1,
     }
   },
-  note: {
-    type: Sequelize.STRING(200),
-    allowNull: false,
-  },
 });
 
 export default OrderItem;
