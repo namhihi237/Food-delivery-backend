@@ -107,46 +107,23 @@ const cartMutation = {
         global.logger.info('cartMutation::checkout::voucher' + JSON.stringify(voucher));
       }
 
-
       // calculate total price
       const subTotal = cartItems.reduce((acc, item) => {
         return acc + item.quantity * item.items.price;
       }, 0);
 
       // calculate shipping
-      // @ --- need to implement function calculate shipping here --- @
-      const shipping = 0;
+      const shipping = await calculateShipping(args);
 
       // calculate total after discount
-      let total = subTotal;
-      let discount = 0;
+      const discount = calculateDiscount(voucher, subTotal);
 
-      if (voucher) {
-        // check expired date voucher
-        if (voucher.expiredDate && voucher.expiredDate < new Date()) {
-          throw new Error('Voucher is expired');
-        }
-
-        switch (voucher.type) {
-          case 'percentage':
-            discount = subTotal * voucher.discount / 100;
-            discount = discount > voucher.maxDiscount ? voucher.maxDiscount : discount;
-            global.logger.info('cartMutation::checkout::voucher::percentage' + JSON.stringify(discount))
-            break;
-          case 'fixed':
-            if (subTotal < voucher.minTotal) {
-              throw new Error(`Total price all items must be greet than ${voucher.minTotal}`);
-            }
-            discount = voucher.discount;
-            global.logger.info('cartMutation::checkout::voucher::fixed' + JSON.stringify(discount))
-            break;
-        }
-
-        total = total - discount;
-      }
+      const total = subTotal - discount;
 
       // calculate grand total
       const grandTotal = total + shipping;
+
+      const deliveryTime = await calculateDeliveryTime();
 
       transaction = await context.db.sequelize.transaction();
 
@@ -167,6 +144,7 @@ const cartMutation = {
           phoneNumber: user.phoneNumber,
           address: user.address,
           name: user.fullName,
+          deliveryTime
         }, { transaction });
 
         // create transaction
@@ -177,21 +155,22 @@ const cartMutation = {
           content: '',
         });
 
-        // create order items
-        cartItems.forEach(async (cartItem) => {
-          await context.db.OrderItems.create({
-            OrderId: order.id,
-            ItemId: cartItem.itemId,
-            UserId: context.user.id,
-            quantity: cartItem.quantity,
-            price: cartItem.items.price,
-          });
-        }, { transaction });
-
-
       } else if (method === 'MOMO') {
         // Not implemented
       }
+
+      // create order items
+      const orderItems = cartItems.map(cartItem => {
+        return {
+          OrderId: order.id,
+          ItemId: cartItem.itemId,
+          UserId: context.user.id,
+          quantity: cartItem.quantity,
+          price: cartItem.items.price,
+        };
+      });
+
+      await context.db.OrderItems.bulkCreate(orderItems, { transaction });
 
       // delete cart item
       await context.db.CartItems.destroy({ where: { UserId: context.user.id }, transaction });
@@ -210,4 +189,42 @@ const cartMutation = {
   }
 }
 
+
+async function calculateShipping(args) {
+  // @ --- need to implement function calculate shipping here --- @
+  return 0;
+}
+
+async function calculateDeliveryTime() {
+  // @ --- need to implement function calculate delivery time here --- @
+  return new Date();
+}
+
+
+function calculateDiscount(voucher, subTotal) {
+  global.logger.info('cartMutation::calculateDiscount' + JSON.stringify(voucher) + subTotal);
+  let discount = 0;
+
+  if (voucher) {
+    // check expired date voucher
+    if (voucher.expiredDate && voucher.expiredDate < new Date()) {
+      throw new Error('Voucher is expired');
+    }
+
+    switch (voucher.type) {
+      case 'percentage':
+        discount = subTotal * voucher.discount / 100;
+        discount = discount > voucher.maxDiscount ? voucher.maxDiscount : discount;
+        break;
+      case 'fixed':
+        if (subTotal < voucher.minTotal) {
+          throw new Error(`Total price all items must be greet than ${voucher.minTotal}`);
+        }
+        discount = voucher.discount;
+        break;
+    }
+
+    return discount;
+  }
+}
 export default cartMutation;

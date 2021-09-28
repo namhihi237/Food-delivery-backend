@@ -10,7 +10,8 @@ const CartItem = {
   createdAt: (parent, args, context) => {
     if (!parent.createdAt) return null;
     return moment(parent.createdAt).format('YYYY-MM-DD HH:mm:ss');
-  }
+  },
+
 }
 
 export default CartItem;
