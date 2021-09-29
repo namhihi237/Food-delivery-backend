@@ -74,6 +74,11 @@ export default gql`
     createdAt: String!
   }
 
+  type resultOrders {
+    orders: [Order]!
+    total: Int!
+  }
+
   type Admin {
     id: ID!
     userName: String!
@@ -84,9 +89,10 @@ export default gql`
     user(id: ID!): User!
     getMe: User!
     getCategories: [Category!]!
-    getItems(skip: Int, limit: Int, filter: itemFilter, orderBy: OrderByList ): resultItems!
+    getItems(skip: Int, limit: Int, filter: itemFilter, orderBy: ItemOrderBy ): resultItems!
     getItem(id: ID!): Item!
     getCartItems: [CartItem!]!
+    listOrders(skip: Int, limit: Int, filter: orderFilter, orderBy: OrderOrderBy): resultOrders!
   }
 
   type Mutation {
@@ -111,11 +117,21 @@ export default gql`
     categoryId: Int
   }
 
-  input OrderByList {
+  input orderFilter {
+    status: statusOrderEnum
+  }
+
+  input ItemOrderBy {
     name: OrderByEnum
     price: OrderByEnum
     rating: OrderByEnum
     creatAt: OrderByEnum
+  }
+
+  input OrderOrderBy {
+    creatAt: OrderByEnum
+    grandTotal: OrderByEnum
+    subTotal: OrderByEnum
   }
 
   enum OrderByEnum {
@@ -126,6 +142,11 @@ export default gql`
   enum methodEnum {
     COD
     MOMO
+  }
+
+  enum statusOrderEnum {
+    PAST
+    PROCESSING
   }
 
 `;

@@ -76,7 +76,7 @@ const Order = sequelize.define('Order', {
   },
   status: {
     type: Sequelize.ENUM,
-    values: ['new', 'processing', 'paid', 'shipped', 'delivered', 'cancelled', 'returned', 'completed'],
+    values: ['NEW', 'SHIPPING',  'CANCELLED', 'RETURNED', 'COMPLETED'],
     allowNull: false,
     defaultValue: 'new',
   },
