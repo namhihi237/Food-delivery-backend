@@ -146,7 +146,7 @@ export default gql`
 
   enum statusOrderEnum {
     PAST
-    PROCESSING
+    CURRENT
   }
 
 `;

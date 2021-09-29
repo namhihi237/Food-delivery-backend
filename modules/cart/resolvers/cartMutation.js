@@ -1,3 +1,5 @@
+import { OrderEnum, TransactionEnum, MethodPaymentEnum } from '../enum';
+
 const cartMutation = {
   addToCart: async (parent, args, context, info) => {
     global.logger.info('cartMutation::addToCart' + JSON.stringify(args));
@@ -132,7 +134,7 @@ const cartMutation = {
       if (method === 'COD') {
         order = await context.db.Orders.create({
           UserId: context.user.id,
-          status: 'new',
+          status: OrderEnum.NEW,
           subTotal,
           shipping,
           total,
@@ -150,8 +152,8 @@ const cartMutation = {
         // create transaction
         await context.db.Transactions.create({
           OrderId: order.id,
-          status: 'NEW',
-          methodPayment: 'COD',
+          status: TransactionEnum.NEW,
+          methodPayment: MethodPaymentEnum.COD,
           content: '',
         });
 
