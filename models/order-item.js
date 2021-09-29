@@ -32,4 +32,7 @@ const OrderItem = sequelize.define('OrderItem', {
   },
 });
 
+OrderItem.associate = models => {
+  OrderItem.belongsTo(models.Items, { foreignKey: 'itemId', as: 'items' });
+}
 export default OrderItem;

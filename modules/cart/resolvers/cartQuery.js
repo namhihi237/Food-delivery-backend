@@ -62,6 +62,29 @@ const cartQuery = {
     orders = JSON.parse(JSON.stringify(orders));
 
     return { total, orders };
+  },
+
+  detailOrder: async (parent, args, context, info) => {
+    global.logger.info('cartQuery::detailOrder' + JSON.stringify(args));
+
+    const { id } = args;
+
+    // check token header
+    if (!context.user) {
+      throw new Error('Token is invalid');
+    }
+
+    let order = await context.db.Orders.findOne({
+      where: { id },
+    });
+
+    if (!order) {
+      throw new Error('Order not found');
+    }
+
+    order = JSON.parse(JSON.stringify(order));
+
+    return order;
   }
 }
 

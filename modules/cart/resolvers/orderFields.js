@@ -13,6 +13,34 @@ const Order = {
     console.log(parent.createdAt);
 
     return moment(parent.deliveryTime).format('YYYY-MM-DD HH:mm:ss');
+  },
+
+  items: async (parent, args, context, info) => {
+    let items = await context.db.OrderItems.findAll({
+      include: [
+        {
+          model: context.db.Items,
+          as: "items",
+        }
+      ],
+      where: {
+        orderId: parent.id,
+      }
+    });
+    items = JSON.parse(JSON.stringify(items));
+
+    items = items.map(item => {
+
+      let newItem = {
+        ...item,
+        name: item.items.name,
+        image: item.items.image,
+      }
+      delete newItem.items;
+      return newItem;
+    });
+
+    return items;
   }
 
 }

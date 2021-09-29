@@ -54,6 +54,8 @@ export default gql`
     id: ID!
     item: Item!
     price: Int!
+    name: String!
+    image: String!
     quantity: Int!
   }
 
@@ -93,6 +95,7 @@ export default gql`
     getItem(id: ID!): Item!
     getCartItems: [CartItem!]!
     listOrders(skip: Int, limit: Int, filter: orderFilter, orderBy: OrderOrderBy): resultOrders!
+    detailOrder(id: ID!): Order!
   }
 
   type Mutation {
@@ -141,7 +144,7 @@ export default gql`
 
   enum methodEnum {
     COD
-    MOMO
+    ONLINE
   }
 
   enum statusOrderEnum {

@@ -57,7 +57,7 @@ const Item = sequelize.define('Item', {
 
 Item.associate = models => {
   Item.belongsToMany(models.Tags, { through: 'ItemTags' });
-  Item.hasMany(models.OrderItems, { as: 'orderItems' });
+  // Item.hasMany(models.OrderItems, { as: 'orderItems' });
   Item.hasMany(models.Reviews, { as: 'reviews' });
   Item.belongsTo(models.Categories, { as: 'categories', foreignKey: 'categoryId' });
 }

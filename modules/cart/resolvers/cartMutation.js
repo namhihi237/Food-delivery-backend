@@ -157,7 +157,7 @@ const cartMutation = {
           content: '',
         });
 
-      } else if (method === 'MOMO') {
+      } else if (method === 'ONLINE') {
         // Not implemented
       }
 
@@ -165,7 +165,7 @@ const cartMutation = {
       const orderItems = cartItems.map(cartItem => {
         return {
           OrderId: order.id,
-          ItemId: cartItem.itemId,
+          itemId: cartItem.itemId,
           UserId: context.user.id,
           quantity: cartItem.quantity,
           price: cartItem.items.price,
