@@ -43,10 +43,41 @@ export default gql`
     id: ID!
     item: Item!
     quantity: Int!
+    createdAt: String!
   }
 
   type resultItems {
     items: [Item]!
+    total: Int!
+  }
+  type OrderItem {
+    id: ID!
+    item: Item!
+    price: Int!
+    name: String!
+    image: String!
+    quantity: Int!
+  }
+
+  type Order {
+    id: ID!
+    subTotal: Int!
+    total: Int!
+    shipping: Int!
+    grandTotal: Int!
+    items: [OrderItem]!
+    discount: Int!
+    address: String!
+    phoneNumber: String!
+    name: String!
+    deliveryTime: String!
+    note: String!
+    status: String!
+    createdAt: String!
+  }
+
+  type resultOrders {
+    orders: [Order]!
     total: Int!
   }
 
@@ -60,9 +91,11 @@ export default gql`
     user(id: ID!): User!
     getMe: User!
     getCategories: [Category!]!
-    getItems(skip: Int, limit: Int, filter: itemFilter, orderBy: OrderByList ): resultItems!
+    getItems(skip: Int, limit: Int, filter: itemFilter, orderBy: ItemOrderBy ): resultItems!
     getItem(id: ID!): Item!
     getCartItems: [CartItem!]!
+    listOrders(skip: Int, limit: Int, filter: orderFilter, orderBy: OrderOrderBy): resultOrders!
+    detailOrder(id: ID!): Order!
   }
 
   type Mutation {
@@ -73,6 +106,7 @@ export default gql`
     deleteCartItem(id: ID!): Boolean!
     getCodeActivePhoneNumber(phoneNumber: String!): Boolean!
     activePhoneNumber(phoneNumber: String!, code: String!): Boolean!
+    checkout(method: methodEnum!, note: String, voucherCode: String ): Order!
 
   }
 
@@ -86,16 +120,36 @@ export default gql`
     categoryId: Int
   }
 
-  input OrderByList {
+  input orderFilter {
+    status: statusOrderEnum
+  }
+
+  input ItemOrderBy {
     name: OrderByEnum
     price: OrderByEnum
     rating: OrderByEnum
     creatAt: OrderByEnum
   }
 
+  input OrderOrderBy {
+    creatAt: OrderByEnum
+    grandTotal: OrderByEnum
+    subTotal: OrderByEnum
+  }
+
   enum OrderByEnum {
     asc
     desc
+  }
+
+  enum methodEnum {
+    COD
+    ONLINE
+  }
+
+  enum statusOrderEnum {
+    PAST
+    CURRENT
   }
 
 `;

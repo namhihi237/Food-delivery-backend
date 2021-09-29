@@ -26,6 +26,7 @@ const items = [
     description: 'Chicken Burger',
     image: 'https://images.unsplash.com/photo-1518791841217-8f162f1e1131?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60',
     categoryId: 1,
+    maxDiscount: 2,
   },
   {
     name: 'Beef Burger',
@@ -33,6 +34,7 @@ const items = [
     description: 'Beef Burger',
     image: 'https://images.unsplash.com/photo-1518791841217-8f162f1e1131?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60',
     categoryId: 2,
+    maxDiscount: 3,
   },
   {
     name: 'Chicken Burger',
@@ -40,6 +42,7 @@ const items = [
     description: 'Chicken Burger',
     image: 'https://images.unsplash.com/photo-1518791841217-8f162f1e1131?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60',
     categoryId: 3,
+    maxDiscount: 2,
   },
   {
     name: 'Beef Burger',
@@ -47,7 +50,27 @@ const items = [
     description: 'Beef Burger',
     image: 'https://images.unsplash.com/photo-1518791841217-8f162f1e1131?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60',
     categoryId: 1,
+    maxDiscount: 4,
   },
+];
+
+let vouchers = [
+  {
+    voucherCode: 'ABCD',
+    type: 'percentage',
+    discount: 10,
+    maxDiscount: 4,
+  },
+  {
+    voucherCode: 'EFGH',
+    type: 'fixed',
+    discount: 5,
+    minTotal: 50,
+  },
+  {
+    voucherCode: 'IJKL',
+    type: 'free-shipping',
+  }
 ];
 
 /**
@@ -72,6 +95,8 @@ const initDb = async () => {
     await db.Transactions.destroy({ where: {} });
     await db.Tags.destroy({ where: {} });
     await db.CodeResets.destroy({ where: {} });
+    await db.Vouchers.destroy({ where: {} });
+    await db.CartItems.destroy({ where: {} });
 
     // create new data
     await db.Categories.bulkCreate(categories);
@@ -81,20 +106,30 @@ const initDb = async () => {
 
     const password = await bcryptUtils.hashPassword('123456');
     const user = await db.Users.create({
+      id: 'cfeeaf60-1fc4-11ec-a6eb-ab44621d82c4',
       email: 'yentth237@gmail.com',
       password,
       fullName: 'Le Trung Nam',
+      phoneNumber: '+84989402047',
+      address: '120 Nguyen Luong Bang, Hoa Khanh Bac, Lien Chieu, Da Nang',
       isActive: true,
     });
 
-    const item = await db.Items.findOne();
+    // create voucher
+    vouchers = vouchers.map(voucher => {
+      return { ...voucher, UserId: user.id }
+    });
+    await db.Vouchers.bulkCreate(vouchers);
+
+    const itemsCreate = await db.Items.findAll();
 
     // create cart item
-    await db.CartItems.create({
-      UserId: user.id,
-      itemId: item.id,
-      quantity: 1,
-    });
+    await db.CartItems.bulkCreate([
+      { UserId: user.id, itemId: itemsCreate[0].id, quantity: 1, },
+      { UserId: user.id, itemId: itemsCreate[1].id, quantity: 3, }
+    ]);
+
+
 
     await db.sequelize.query('SET FOREIGN_KEY_CHECKS = 1');
     console.log('Init database success!');

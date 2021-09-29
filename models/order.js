@@ -12,15 +12,15 @@ const Order = sequelize.define('Order', {
     primaryKey: true,
     defaultValue: Sequelize.UUIDV1,
   },
-  itemDiscount: {
-    type: Sequelize.FLOAT,
-    allowNull: true,
-  },
-  promoCode: {
+  voucherCode: {
     type: Sequelize.STRING,
     allowNull: true,
   },
-  promoDiscount: {
+  voucherCode: {
+    type: Sequelize.FLOAT,
+    allowNull: true,
+  },
+  discount: { //the total discount of the Order based on the promo code
     type: Sequelize.FLOAT,
     allowNull: true,
   },
@@ -76,15 +76,19 @@ const Order = sequelize.define('Order', {
   },
   status: {
     type: Sequelize.ENUM,
-    values: ['new', 'processing', 'paid', 'shipped', 'delivered', 'cancelled', 'returned', 'completed'],
+    values: ['NEW', 'SHIPPING',  'CANCELLED', 'RETURNED', 'COMPLETED'],
     allowNull: false,
     defaultValue: 'new',
   },
+  note: {
+    type: Sequelize.STRING(250),
+    allowNull: true,
+  }
 });
 
 Order.associate = models => {
   Order.belongsToMany(models.Items, { through: 'ItemTags' });
-  Order.hasMany(models.OrderItems, {as: 'orderItems'});
+  Order.hasMany(models.OrderItems, { as: 'orderItems' });
 }
 
 export default Order;

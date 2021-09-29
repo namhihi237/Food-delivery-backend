@@ -11,8 +11,8 @@ const Review = {
   },
 
   createdAt: (parent, args, context) => {
-    if (!_parent.createdAt) return null;
-    return moment(_parent.createdAt).format('YYYY-MM-DD HH:mm:ss');
+    if (!parent.createdAt) return null;
+    return moment(parent.createdAt).format('YYYY-MM-DD HH:mm:ss');
   }
 
 }

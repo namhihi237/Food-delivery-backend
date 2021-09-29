@@ -42,11 +42,22 @@ const Item = sequelize.define('Item', {
       len: [0, 250]
     }
   },
+  maxDiscount: {
+    type: Sequelize.FLOAT,
+    allowNull: true,
+    validate: {
+      min: 0,
+    }
+  },
+  isActive: {
+    type: Sequelize.BOOLEAN,
+    defaultValue: true,
+  }
 });
 
 Item.associate = models => {
   Item.belongsToMany(models.Tags, { through: 'ItemTags' });
-  Item.hasMany(models.OrderItems, { as: 'orderItems' });
+  // Item.hasMany(models.OrderItems, { as: 'orderItems' });
   Item.hasMany(models.Reviews, { as: 'reviews' });
   Item.belongsTo(models.Categories, { as: 'categories', foreignKey: 'categoryId' });
 }
