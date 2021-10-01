@@ -3,7 +3,7 @@ require('dotenv').config();
 const NODE_ENV = process.env.NODE_ENV || 'dev';
 
 export const envVariable = {
-  PORT: NODE_ENV == 'stg' ? process.env.PORT : 80,
+  PORT: NODE_ENV == 'stg' ? process.env.PORT : 8000,
   JWT_SECRET: process.env.JWT_SECRET || '123456',
   CLOUD_NAME: process.env.CLOUD_NAME || '',
   API_KEY_CLOUD: process.env.API_KEY_CLOUD || '',
