@@ -99,13 +99,15 @@ export default gql`
   }
 
   type Mutation {
-    register(email: String!, fullName: String!, password: String!): User!
-    login(email: String!, password: String!, firebaseIdentifier: String): JWTResponse!
+    register(phoneNumber: String!, fullName: String!, password: String!): User!
+    activePhoneNumber(phoneNumber: String!, code: String!): JWTResponse!
+    login(phoneNumber: String!, password: String!, firebaseIdentifier: String): JWTResponse!
     logout: Boolean!
     addToCart(itemId: ID!, quantity: Int!): CartItem!
     deleteCartItem(id: ID!): Boolean!
-    getCodeActivePhoneNumber(phoneNumber: String!): Boolean!
-    activePhoneNumber(phoneNumber: String!, code: String!): Boolean!
+    getCodePhoneNumber(phoneNumber: String!): Boolean!
+    activeCodeReset(phoneNumber: String!, code: String!): Boolean!
+    updatePassword(password: String!, phoneNumber: String!, code: String! ): Boolean!
     checkout(method: methodEnum!, note: String, voucherCode: String ): Order!
 
   }
