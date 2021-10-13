@@ -13,8 +13,9 @@ export const envVariable = {
   TWILIO_PHONE_NUMBER: process.env.TWILIO_PHONE_NUMBER || '',
   FIREBASE_URL: process.env.FIREBASE_URL || '',
   CLIENT_ID: process.env.CLIENT_ID || '',
-  DATABASE_URL: NODE_ENV == 'stg' ? process.env.DATABASE_URL : 'mysql://root:@localhost:3306/food-delivery',
+  DATABASE_URL: process.env.DATABASE_URL || 'mysql://root:namvippro23799@localhost:3306/food',
   EMAIL: process.env.EMAIL || '',
   EMAIL_PASSWORD: process.env.EMAIL_PASSWORD || '',
   clientUrl: NODE_ENV == 'stg' ? process.env.CLIENT_URL : 'http://localhost/',
+  expireTime: process.env.expireTime || 30 * 24 * 60 * 60 * 1000,
 };

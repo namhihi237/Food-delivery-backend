@@ -1,7 +1,7 @@
-import {Sequelize} from 'sequelize';
+import { Sequelize } from 'sequelize';
 
-import {envVariable} from "../configs";
-const  {DATABASE_URL} = envVariable;
+import { envVariable } from "../configs";
+const { DATABASE_URL } = envVariable;
 
 export const sequelize = new Sequelize(DATABASE_URL, {
   define: {
