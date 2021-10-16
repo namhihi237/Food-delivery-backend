@@ -26,7 +26,7 @@
           <div class="col-md-7 col-lg-5">
             <div class="card card-lg mb-5">
               <div class="card-body">
-                <form class="js-validate" action="/login" method="post" autocomplete="off">
+                <form class="js-validate" action="/login" method="post" >
                   <div class="text-center">
                     <div class="mb-5">
                       <h1 class="display-4">Sign in</h1>
@@ -36,11 +36,9 @@
                       </p>
                     </div>
                   </div>
-
                   <div class="js-form-message form-group">
                     <label class="input-label text-capitalize" for="signinSrEmail">Your UserName</label>
                     <input
-											autocomplete="off"
                       type="text"
                       class="form-control form-control-lg"
                       id="signinSrEmail"
@@ -49,6 +47,7 @@
                       required
                       data-msg="Please enter a valid username."
                       name="userName"
+											value= "<%= params ? params.userName : ''; %>"
                     />
                   </div>
 
@@ -59,13 +58,13 @@
                     <div class="input-group input-group-merge">
                       <input
                         type="password"
-												autocomplete="off"
                         class="js-toggle-password form-control form-control-lg"
                         name="password"
                         id="signupSrPassword"
                         placeholder="6+ characters required"
                         aria-label="6+ characters required"
                         required
+												value= "<%= params ? params.password : ''; %>"
                         data-msg="Your password is invalid. Please try again."
                         data-hs-toggle-password-options='{
                                                      "target": "#changePassTarget",
@@ -100,6 +99,7 @@
     <%- include('../../component/loadScript.ejs'); -%>
     <script>
       var message = JSON.parse(`<%- JSON.stringify(message) %>`);
+			// var params = JSON.parse(`<%- JSON.stringify(params) %>`);
       jQuery(document).ready(function () {
         if (message) {
           toastr.error(message, Error, {

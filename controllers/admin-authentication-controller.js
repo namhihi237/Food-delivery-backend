@@ -9,7 +9,7 @@ class AdminAuthenticationController {
   }
 
   login(req, res) {
-    res.render(`${this.rootModule}auth/login`, { message: '' });
+    res.render(`${this.rootModule}auth/login`, { message: '' , params: null});
   }
 
   async postLogin(req, res) {
@@ -28,19 +28,19 @@ class AdminAuthenticationController {
       logger.info('AdminAuthenticationController::postLogin', user, "user");
 
       if (!user) {
-        return res.render(`${this.rootModule}auth/login`, { message: 'User not found' });
+        return res.render(`${this.rootModule}auth/login`, { message: 'User not found', params: req.body });
       }
 
       // check password
       const isPasswordValid = await bcryptUtils.comparePassword(password, user.password);
 
       if (!isPasswordValid) {
-        return res.render(`${this.rootModule}auth/login`, { message: 'Invalid password' });
+        return res.render(`${this.rootModule}auth/login`, { message: 'Invalid password', params: req.body });
       }
 
       // check active
       if (!user.isActive) {
-        return res.render(`${this.rootModule}auth/login`, { message: 'User is not active' });
+        return res.render(`${this.rootModule}auth/login`, { message: 'User is not active', params: req.body });
       }
 
       // create session
