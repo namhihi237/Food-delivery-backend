@@ -13,7 +13,7 @@ export default ({ db }) => {
   // authentication routes
   router.route('/login').get((req, res) => adminAuthenticationController.login(req, res));
   router.route('/login').post((req, res) => adminAuthenticationController.postLogin(req, res));
-
+  router.route('/logout').get((req, res) => adminAuthenticationController.logout(req, res));
 
   // dashboard routes
   router.route('/dashboard').get((req, res, next) => adminMiddleware.isLoggedIn(req, res, next), (req, res) => adminDashboardController.renderDashboard(req, res));

@@ -9,7 +9,7 @@ class AdminAuthenticationController {
   }
 
   login(req, res) {
-    res.render(`${this.rootModule}auth/login`, { message: '' , params: null});
+    res.render(`${this.rootModule}auth/login`, { message: '', params: null });
   }
 
   async postLogin(req, res) {
@@ -50,6 +50,12 @@ class AdminAuthenticationController {
     } catch (error) {
       console.log(error);
     }
+  }
+
+  logout(req, res) {
+    global.logger.info('AdminAuthenticationController::logout');
+    req.session.destroy();
+    res.redirect('/login');
   }
 }
 
