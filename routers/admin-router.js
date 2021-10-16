@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { AdminAuthenticationController, AdminDashboardController } from '../controllers';
+import { AdminAuthenticationController, AdminDashboardController, AdminCategoryController } from '../controllers';
 import AdminMiddleware from '../middlewares/adminMiddleware';
 
 export default ({ db }) => {
@@ -7,6 +7,8 @@ export default ({ db }) => {
   const router = Router();
   const adminAuthenticationController = new AdminAuthenticationController(db);
   const adminDashboardController = new AdminDashboardController(db);
+  const adminCategoryController = new AdminCategoryController(db);
+
   const adminMiddleware = new AdminMiddleware(db);
   // authentication routes
   router.route('/login').get((req, res) => adminAuthenticationController.login(req, res));
@@ -16,5 +18,8 @@ export default ({ db }) => {
   // dashboard routes
   router.route('/dashboard').get((req, res, next) => adminMiddleware.isLoggedIn(req, res, next), (req, res) => adminDashboardController.renderDashboard(req, res));
 
+
+  // category routes
+  router.route('/category').get((req, res, next) => adminMiddleware.isLoggedIn(req, res, next), (req, res) => adminCategoryController.renderCategory(req, res));
   return router;
 }

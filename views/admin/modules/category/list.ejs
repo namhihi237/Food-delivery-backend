@@ -1,0 +1,164 @@
+<%- include('../../layout/header.ejs'); -%>
+<div>
+  <div class="page-header">
+    <div class="row align-items-center">
+      <div class="col-sm mb-2 mb-sm-0">
+        <h1 class="page-header-title"><i class="tio-add-circle-outlined"></i> Add New Category</h1>
+      </div>
+    </div>
+  </div>
+
+  <div class="row gx-2 gx-lg-3">
+    <div class="col-sm-12 col-lg-12 mb-3 mb-lg-2">
+      <form action="#" method="post" enctype="multipart/form-data">
+        <div class="row">
+          <div class="col-6">
+            <div class="form-group lang_form" id="en-form">
+              <label class="input-label" for="exampleFormControlInput1">Name</label>
+              <input type="text" name="name[]" class="form-control" placeholder="New Category" required />
+            </div>
+            <input type="hidden" name="lang[]" value="en" />
+            <input name="position" value="0" style="display: none" />
+          </div>
+          <div class="col-6 from_part_2">
+            <label>Image</label><small style="color: red">* ( Ratio 3:1 )</small>
+            <div class="custom-file">
+              <input
+                type="file"
+                name="image"
+                id="customFileEg1"
+                class="custom-file-input"
+                accept=".jpg, .png, .jpeg, .gif, .bmp, .tif, .tiff|image/*"
+                required
+              />
+              <label class="custom-file-label" for="customFileEg1">Choose File</label>
+            </div>
+          </div>
+          <div class="col-12 from_part_2">
+            <div class="form-group">
+              <hr />
+              <center>
+                <img
+                  style="width: 30%; border: 1px solid; border-radius: 10px"
+                  id="viewer"
+                  src="https://demo.6amtech.com/restaurant/public/assets/admin/img/900x400/img1.jpg"
+                  alt="image"
+                />
+              </center>
+            </div>
+          </div>
+        </div>
+        <hr />
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </form>
+    </div>
+    <div class="col-sm-12 col-lg-12 mb-3 mb-lg-2">
+      <hr />
+      <div class="card">
+        <div class="card-header">
+          <div class="flex-start">
+            <h5 class="card-header-title">Category Table</h5>
+            <h5 class="card-header-title text-primary mx-1">(<%=categories.length%>)</h5>
+          </div>
+        </div>
+
+        <div class="table-responsive datatable-custom">
+          <table class="table table-borderless table-thead-bordered table-nowrap table-align-middle card-table">
+            <thead class="thead-light">
+              <tr>
+                <th>#</th>
+                <th style="width: 50%">Name</th>
+                <th style="width: 20%">Status</th>
+                <th style="width: 10%">Action</th>
+              </tr>
+              <tr>
+                <th></th>
+                <th>
+                  <form action="/category/add" method="GET">
+                    <div class="input-group input-group-merge input-group-flush">
+                      <div class="input-group-prepend">
+                        <div class="input-group-text">
+                          <i class="tio-search"></i>
+                        </div>
+                      </div>
+                      <input
+                        id="datatableSearch_"
+                        type="search"
+                        name="search"
+                        class="form-control"
+                        placeholder="Search"
+                        aria-label="Search"
+                        value=""
+                        required
+                      />
+                      <button type="submit" class="btn btn-primary">search</button>
+                    </div>
+                  </form>
+                </th>
+                <th>
+                  <select
+                    id="column3_search"
+                    class="js-select2-custom"
+                    data-hs-select2-options='{
+                                              "minimumResultsForSearch": "Infinity",
+                                              "customClass": "custom-select custom-select-sm text-capitalize"
+                                            }'
+                  >
+                    <option value="">Any</option>
+                    <option value="Active">Active</option>
+                    <option value="Disabled">Disabled</option>
+                  </select>
+                </th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <% categories.forEach(function(category, index){ %>
+              <tr>
+                <td><%=index + 1 %></td>
+                <td>
+                  <span class="d-block font-size-sm text-body"> <%=category.name %> </span>
+                </td>
+                <td>
+                  <div
+                    style="padding: 10px; border: 1px solid; cursor: pointer"
+                    onclick="location.href='https://demo.6amtech.com/restaurant/admin/category/status/39/0'"
+                  >
+                    <span class="legend-indicator bg-success"></span>Active
+                  </div>
+                </td>
+                <td>
+                  <div class="dropdown">
+                    <button
+                      class="btn btn-secondary dropdown-toggle"
+                      type="button"
+                      id="dropdownMenuButton"
+                      data-toggle="dropdown"
+                      aria-haspopup="true"
+                      aria-expanded="false"
+                    >
+                      <i class="tio-settings"></i>
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                      <a class="dropdown-item" href="#">Edit</a>
+                      <a class="dropdown-item">Delete</a>
+                      <form action="#" method="post" id="category-39">
+                        <input type="hidden" name="_method" value="delete" />
+                      </form>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+              <% }); %>
+            </tbody>
+          </table>
+          <hr />
+          <table>
+            <tfoot></tfoot>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<%- include('../../layout/footer.ejs'); -%>

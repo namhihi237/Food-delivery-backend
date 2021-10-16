@@ -23,6 +23,10 @@ const Category = sequelize.define('Category', {
     validate: {
       len: [0, 100]
     }
+  },
+  status: {
+    type: Sequelize.BOOLEAN,
+    defaultValue: true
   }
 });
 
