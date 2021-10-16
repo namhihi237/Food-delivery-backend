@@ -122,9 +122,9 @@
                 <td>
                   <div
                     style="padding: 10px; border: 1px solid; cursor: pointer"
-                    onclick="location.href='https://demo.6amtech.com/restaurant/admin/category/status/39/0'"
+                    onclick="changeStatusCategory('<%=category.id %>')"
                   >
-                    <span class="legend-indicator bg-success"></span>Active
+                    <span id="status-<%=category.id %>" class="legend-indicator <%= category.status ? 'bg-success' : 'bg-danger' %>"></span><%= category.status ? 'Active' : 'Disabled' %></span> 
                   </div>
                 </td>
                 <td>
@@ -161,4 +161,22 @@
     </div>
   </div>
 </div>
+<script>
+  function changeStatusCategory(id) {
+    console.log("change");
+    $.post(`/categories/${id}/change-status`, {}).done(function(data) {
+      if(data.ok) {
+        let status =$(`#status-${id}`);
+        if (status.hasClass("bg-success")) {
+          status.removeClass("bg-success");
+          status.addClass("bg-danger");
+        } else {
+          status.removeClass("bg-danger");
+          status.addClass("bg-success");
+        }
+        
+      }
+    });
+  }
+</script>
 <%- include('../../layout/footer.ejs'); -%>
