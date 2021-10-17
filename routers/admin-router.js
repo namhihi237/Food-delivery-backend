@@ -24,6 +24,8 @@ export default ({ db }) => {
   router.route('/categories/:id/change-status').post((req, res, next) => adminMiddleware.isLoggedIn(req, res, next), (req, res) => adminCategoryController.changeStatusCategory(req, res));
   router.route('/categories/add').post((req, res, next) => adminMiddleware.isLoggedIn(req, res, next), upload.single('image'), (req, res) => adminCategoryController.addCategory(req, res));
   router.route('/categories/:id/delete').post((req, res, next) => adminMiddleware.isLoggedIn(req, res, next), (req, res) => adminCategoryController.deleteCategory(req, res));
+  router.route('/categories/:id/edit').get((req, res, next) => adminMiddleware.isLoggedIn(req, res, next), upload.single('image'), (req, res) => adminCategoryController.editCategory(req, res));
+  router.route('/categories/:id/edit').post((req, res, next) => adminMiddleware.isLoggedIn(req, res, next), upload.single('image'), (req, res) => adminCategoryController.postEditCategory(req, res));
 
   return router;
 }
