@@ -1,3 +1,4 @@
+import { imageUtils } from '../utils';
 class AdminCategoryController {
   constructor(db) {
     this.db = db;
@@ -45,6 +46,39 @@ class AdminCategoryController {
         ok: true,
       });
     } catch (error) {
+      res.render(`${this.rootModule}error/404`);
+    }
+  }
+
+  async addCategory(req, res) {
+    global.logger.info(`AdminCategoryController::addCategory`, JSON.stringify(req.body));
+    try {
+      let params = req.body;
+      // check required params
+      if (!params.name || !req.file) {
+        console.log('Missing params');
+        return;
+      }
+      const image = await imageUtils.uploadImageAdmin(req.file.path);
+      if (!image) {
+        return;
+      }
+
+      await this.db.Categories.create({
+        name: params.name,
+        image: image.url,
+        status: true
+      });
+
+      let categories = await this.db.Categories.findAll();
+
+      categories = JSON.parse(JSON.stringify(categories));
+
+      res.render(this.rootModule + 'category/list', {
+        categories
+      });
+    } catch (error) {
+      global.logger.error(`AdminCategoryController::addCategory`, error);
       res.render(`${this.rootModule}error/404`);
     }
   }

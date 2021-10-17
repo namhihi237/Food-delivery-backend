@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import { AdminAuthenticationController, AdminDashboardController, AdminCategoryController } from '../controllers';
 import AdminMiddleware from '../middlewares/adminMiddleware';
+import { upload } from "../utils";
 
 export default ({ db }) => {
   // create new instance of router
@@ -18,10 +19,9 @@ export default ({ db }) => {
   // dashboard routes
   router.route('/dashboard').get((req, res, next) => adminMiddleware.isLoggedIn(req, res, next), (req, res) => adminDashboardController.renderDashboard(req, res));
 
-
   // category routes
   router.route('/categories').get((req, res, next) => adminMiddleware.isLoggedIn(req, res, next), (req, res) => adminCategoryController.renderCategory(req, res));
   router.route('/categories/:id/change-status').post((req, res, next) => adminMiddleware.isLoggedIn(req, res, next), (req, res) => adminCategoryController.changeStatusCategory(req, res));
-
+  router.route('/categories/add').post((req, res, next) => adminMiddleware.isLoggedIn(req, res, next), upload.single('image'), (req, res) => adminCategoryController.addCategory(req, res));
   return router;
 }

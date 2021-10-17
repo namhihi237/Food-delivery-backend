@@ -10,15 +10,13 @@
 
   <div class="row gx-2 gx-lg-3">
     <div class="col-sm-12 col-lg-12 mb-3 mb-lg-2">
-      <form action="#" method="post" enctype="multipart/form-data">
+      <form action="/categories/add" method="post" enctype="multipart/form-data">
         <div class="row">
           <div class="col-6">
             <div class="form-group lang_form" id="en-form">
               <label class="input-label" for="exampleFormControlInput1">Name</label>
-              <input type="text" name="name[]" class="form-control" placeholder="New Category" required />
+              <input type="text" name="name" class="form-control" placeholder="New Category" required />
             </div>
-            <input type="hidden" name="lang[]" value="en" />
-            <input name="position" value="0" style="display: none" />
           </div>
           <div class="col-6 from_part_2">
             <label>Image</label><small style="color: red">* ( Ratio 3:1 )</small>
