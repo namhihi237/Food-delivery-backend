@@ -37,9 +37,9 @@
               <hr />
               <center>
                 <img
-                  style="width: 30%; border: 1px solid; border-radius: 10px"
+                  style="width: 150px; border: 1px solid; border-radius: 10px; height: 150px"
                   id="viewer"
-                  src="https://demo.6amtech.com/restaurant/public/assets/admin/img/900x400/img1.jpg"
+                  src="./images/img1.jpg"
                   alt="image"
                 />
               </center>
@@ -112,17 +112,15 @@
             </thead>
             <tbody>
               <% categories.forEach(function(category, index){ %>
-              <tr>
+              <tr id="category-<%= category.id%>">
                 <td><%=index + 1 %></td>
                 <td>
                   <span class="d-block font-size-sm text-body"> <%=category.name %> </span>
                 </td>
                 <td>
-                  <div
-                    style="padding: 10px; border: 1px solid; cursor: pointer"
-                    onclick="changeStatusCategory('<%=category.id %>')"
-                  >
-                    <span id="status-<%=category.id %>" class="legend-indicator <%= category.status ? 'bg-success' : 'bg-danger' %>"></span><%= category.status ? 'Active' : 'Disabled' %></span> 
+                  <div style="padding: 10px; border: 1px solid; cursor: pointer" onclick="changeStatusCategory('<%=category.id %>')">
+                    <span id="status-<%=category.id %>" class="legend-indicator <%= category.status ? 'bg-success' : 'bg-danger' %>"></span
+                    ><%= category.status ? 'Active' : 'Disabled' %>
                   </div>
                 </td>
                 <td>
@@ -139,7 +137,7 @@
                     </button>
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                       <a class="dropdown-item" href="#">Edit</a>
-                      <a class="dropdown-item">Delete</a>
+                      <a class="dropdown-item" onclick="deleteCategory('<%=category.id %>')">Delete</a>
                       <form action="#" method="post" id="category-39">
                         <input type="hidden" name="_method" value="delete" />
                       </form>
@@ -160,21 +158,52 @@
   </div>
 </div>
 <script>
+  jQuery(document).ready(function () {
+    $('#customFileEg1').change(function () {
+      readURL(this);
+    });
+  });
+
   function changeStatusCategory(id) {
-    console.log("change");
-    $.post(`/categories/${id}/change-status`, {}).done(function(data) {
-      if(data.ok) {
-        let status =$(`#status-${id}`);
-        if (status.hasClass("bg-success")) {
-          status.removeClass("bg-success");
-          status.addClass("bg-danger");
+    console.log('change');
+    $.post(`/categories/${id}/change-status`, {}).done(function (data) {
+      if (data.ok) {
+        let status = $(`#status-${id}`);
+        if (status.hasClass('bg-success')) {
+          status.removeClass('bg-success');
+          status.addClass('bg-danger');
         } else {
-          status.removeClass("bg-danger");
-          status.addClass("bg-success");
+          status.removeClass('bg-danger');
+          status.addClass('bg-success');
         }
-        
       }
     });
+  }
+
+  function deleteCategory(id) {
+    console.log('delete');
+    $.post(`/categories/${id}/delete`, {}).done(function (data) {
+      console.log(data);
+      if (data.ok) {
+        $(`#category-${id}`).remove();
+        toastr.success(data.message);
+      } else {
+        toastr.error(data.message);
+      }
+    });
+  }
+
+  function readURL(input) {
+    console.log(input);
+    if (input.files && input.files[0]) {
+      var reader = new FileReader();
+
+      reader.onload = function (e) {
+        $('#viewer').attr('src', e.target.result);
+      };
+
+      reader.readAsDataURL(input.files[0]);
+    }
   }
 </script>
 <%- include('../../layout/footer.ejs'); -%>

@@ -36,6 +36,7 @@ class ImageUtils {
 
 
   removeImageToCloud(url) {
+    global.logger.info("ImageUtils::removeImageToCloud" + url);
     const id = url.split('/').slice(-1)[0].split('.')[0];
     cloudinary.v2.uploader.destroy(id, (result) => {
       return true;
