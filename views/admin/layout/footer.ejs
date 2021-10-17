@@ -15,6 +15,24 @@
 					var unfold = new HSUnfold($(this)).init();
 				});
 			});
+
+			function form_alert(id, message, callback) {
+				Swal.fire({
+					title: 'Are you sure?',
+					text: message,
+					type: 'warning',
+					showCancelButton: true,
+					cancelButtonColor: 'default',
+					confirmButtonColor: '#FC6A57',
+					cancelButtonText: 'No',
+					confirmButtonText: 'Yes',
+					reverseButtons: true
+				}).then((result) => {
+					if (result.value) {
+						callback();
+					}
+				});
+			}
 		</script>
 	</body>
 </html>

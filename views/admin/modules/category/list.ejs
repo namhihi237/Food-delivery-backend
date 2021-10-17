@@ -138,9 +138,6 @@
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                       <a class="dropdown-item" href="/categories/<%=category.id%>/edit">Edit</a>
                       <a class="dropdown-item" onclick="deleteCategory('<%=category.id %>')">Delete</a>
-                      <form action="#" method="post" id="category-39">
-                        <input type="hidden" name="_method" value="delete" />
-                      </form>
                     </div>
                   </div>
                 </td>
@@ -181,15 +178,16 @@
   }
 
   function deleteCategory(id) {
-    console.log('delete');
-    $.post(`/categories/${id}/delete`, {}).done(function (data) {
-      console.log(data);
-      if (data.ok) {
-        $(`#category-${id}`).remove();
-        toastr.success(data.message);
-      } else {
-        toastr.error(data.message);
-      }
+    form_alert(null, 'Want to delete this item ?', () => {
+      $.post(`/categories/${id}/delete`, {}).done(function (data) {
+        console.log(data);
+        if (data.ok) {
+          $(`#category-${id}`).remove();
+          toastr.success(data.message);
+        } else {
+          toastr.error(data.message);
+        }
+      });
     });
   }
 
