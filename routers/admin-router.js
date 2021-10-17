@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { AdminAuthenticationController, AdminDashboardController, AdminCategoryController } from '../controllers';
+import { AdminAuthenticationController, AdminDashboardController, AdminCategoryController, AdminItemController } from '../controllers';
 import AdminMiddleware from '../middlewares/adminMiddleware';
 import { upload } from "../utils";
 
@@ -9,6 +9,7 @@ export default ({ db }) => {
   const adminAuthenticationController = new AdminAuthenticationController(db);
   const adminDashboardController = new AdminDashboardController(db);
   const adminCategoryController = new AdminCategoryController(db);
+  const adminItemController = new AdminItemController(db);
 
   const adminMiddleware = new AdminMiddleware(db);
   // authentication routes
@@ -27,5 +28,8 @@ export default ({ db }) => {
   router.route('/categories/:id/edit').get((req, res, next) => adminMiddleware.isLoggedIn(req, res, next), upload.single('image'), (req, res) => adminCategoryController.editCategory(req, res));
   router.route('/categories/:id/edit').post((req, res, next) => adminMiddleware.isLoggedIn(req, res, next), upload.single('image'), (req, res) => adminCategoryController.postEditCategory(req, res));
 
+
+  // item routes
+  router.route('/items').get((req, res, next) => adminMiddleware.isLoggedIn(req, res, next), (req, res) => adminItemController.listItems(req, res));
   return router;
 }

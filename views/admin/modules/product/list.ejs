@@ -1,0 +1,119 @@
+<%- include('../../layout/header.ejs'); -%>
+<div class="page-header">
+  <div class="row align-items-center">
+    <div class="col-sm mb-2 mb-sm-0">
+      <h1 class="page-header-title"><i class="tio-filter-list"></i> Product List</h1>
+    </div>
+  </div>
+</div>
+
+<div class="row gx-2 gx-lg-3">
+  <div class="col-sm-12 col-lg-12 mb-3 mb-lg-2">
+    <div class="card">
+      <div class="card-header">
+        <div class="row" style="width: 100%">
+          <div class="col-8 mb-3 mb-lg-0">
+            <form action="https://demo.6amtech.com/restaurant/admin/product/list" method="GET">
+              <div class="input-group input-group-merge input-group-flush">
+                <div class="input-group-prepend">
+                  <div class="input-group-text">
+                    <i class="tio-search"></i>
+                  </div>
+                </div>
+                <input
+                  id="datatableSearch_"
+                  type="search"
+                  name="search"
+                  class="form-control"
+                  placeholder="Search"
+                  aria-label="Search"
+                  value=""
+                  required
+                />
+                <button type="submit" class="btn btn-primary">search</button>
+              </div>
+            </form>
+          </div>
+          <div class="col-4 mb-3 mb-lg-0">
+            <a href="https://demo.6amtech.com/restaurant/admin/product/add-new" class="btn btn-primary pull-right btn-block"
+              ><i class="tio-add-circle"></i> Add New Product</a
+            >
+          </div>
+        </div>
+      </div>
+
+      <div class="table-responsive datatable-custom">
+        <table class="table table-borderless table-thead-bordered table-nowrap table-align-middle card-table">
+          <thead class="thead-light">
+            <tr>
+              <th>#</th>
+              <th style="width: 30%">Name</th>
+              <th style="width: 25%">Image</th>
+              <th>Status</th>
+              <th>Price</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody id="set-rows">
+            <tr>
+              <td>1</td>
+              <td>
+                <span class="d-block font-size-sm text-body">
+                  <a href="https://demo.6amtech.com/restaurant/admin/product/view/22"> Buddy Zinger Combo </a>
+                </span>
+              </td>
+              <td>
+                <div style="height: 100px; width: 100px; overflow-x: hidden; overflow-y: hidden">
+                  <img
+                    src="https://demo.6amtech.com/restaurant/storage/app/public/product/2021-02-26-60389495f26f9.png"
+                    style="width: 100px"
+                    onerror="this.src='https://demo.6amtech.com/restaurant/public/assets/admin/img/160x160/img2.jpg'"
+                  />
+                </div>
+              </td>
+              <td>
+                <div
+                  style="padding: 10px; border: 1px solid; cursor: pointer"
+                  onclick="location.href='https://demo.6amtech.com/restaurant/admin/product/status/22/0'"
+                >
+                  <span class="legend-indicator bg-success"></span>Active
+                </div>
+              </td>
+              <td>12 $</td>
+              <td>
+                <div class="dropdown">
+                  <button
+                    class="btn btn-secondary dropdown-toggle"
+                    type="button"
+                    id="dropdownMenuButton"
+                    data-toggle="dropdown"
+                    aria-haspopup="true"
+                    aria-expanded="false"
+                  >
+                    <i class="tio-settings"></i>
+                  </button>
+                  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <a class="dropdown-item" href="https://demo.6amtech.com/restaurant/admin/product/edit/22">Edit</a>
+                    <a class="dropdown-item" href="javascript:" onclick="form_alert('product-22','Want to delete this item ?')">Delete</a>
+                    <form action="https://demo.6amtech.com/restaurant/admin/product/delete/22" method="post" id="product-22">
+                      <input type="hidden" name="_token" value="ywdzrWLov283hoPzF696UkfXGGp2hhlFGPS7iF1I" />
+                      <input type="hidden" name="_method" value="delete" />
+                    </form>
+                  </div>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <hr />
+        <div class="page-area">
+          <table>
+            <tfoot class="border-top"></tfoot>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%- include('../../layout/footer.ejs'); -%>
