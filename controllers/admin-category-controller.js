@@ -13,7 +13,8 @@ class AdminCategoryController {
       categories = JSON.parse(JSON.stringify(categories));
 
       res.render(this.rootModule + 'category/list', {
-        categories
+        categories,
+        titlePage: 'List of Categories'
       });
 
     } catch (error) {
@@ -136,7 +137,7 @@ class AdminCategoryController {
         return res.render(`${this.rootModule}error/404`, { message: 'Category not found' });
       }
 
-      return res.render(this.rootModule + 'category/edit', { category });
+      return res.render(this.rootModule + 'category/edit', { category , titlePage: 'Edit Category' });
 
     } catch (error) {
       return res.render(`${this.rootModule}error/404`);
@@ -174,8 +175,9 @@ class AdminCategoryController {
           }
         }
       }
+
       image = req.file ? image.url : category.image;
-      console.log(image, params.name);
+
       await this.db.Categories.update({
         name: params.name,
         image,

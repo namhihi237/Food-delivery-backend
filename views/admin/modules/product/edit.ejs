@@ -1,0 +1,154 @@
+<%- include('../../layout/header.ejs'); -%>
+
+<div class="page-header">
+  <div class="row align-items-center">
+    <div class="col-sm mb-2 mb-sm-0">
+      <h1 class="page-header-title"><i class="tio-add-circle-outlined"></i> Update Product</h1>
+    </div>
+  </div>
+</div>
+<div class="row gx-2 gx-lg-3">
+  <div class="col-sm-12 col-lg-12 mb-3 mb-lg-2">
+    <form action="/items/<%=item.id %>/edit" method="post" id="product_form" enctype="multipart/form-data">
+      <div class="card p-4 lang_form" id="en-form">
+        <div class="form-group">
+          <label class="input-label" for="en_name">Name</label>
+          <input type="text" name="name" id="en_name" class="form-control" required value="<%=item.name %>" />
+        </div>
+        <div class="form-group pt-4">
+          <label class="input-label" for="en_description">Short Description</label>
+          <textarea name="description" style="min-height: 15rem; width: 100%" id="en_hiddenArea"></textarea>
+        </div>
+      </div>
+      <div class="mt-4" id="from_part_2">
+        <div class="row">
+          <div class="col-md-4 col-6">
+            <div class="form-group">
+              <label class="input-label" for="exampleFormControlInput1">Price (VND)</label>
+              <input
+                type="number"
+                min="0"
+                step="1000"
+                value="<%= item.price %>"
+                name="price"
+                class="form-control"
+                placeholder="Ex :100000"
+                required
+              />
+            </div>
+          </div>
+          <div class="col-md-4 col-6">
+            <div class="form-group">
+              <label class="input-label" for="exampleFormControlInput1">Tax</label>
+              <input type="number" min="0" value="<%item.tax || 0 %> step="0.01" name="tax" class="form-control" placeholder="Ex : 7" />
+            </div>
+          </div>
+          <div class="col-md-4 col-6">
+            <div class="form-group">
+              <label class="input-label" for="exampleFormControlInput1">Tax Type</label>
+              <select name="taxType" class="form-control js-select2-custom">
+                <option value="percent">Percent</option>
+                <option value="amount">Amount</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-4 col-6">
+            <div class="form-group">
+              <label class="input-label" for="exampleFormControlInput1">Discount</label>
+              <input type="number" min="0" value="<%= item.discount %>" name="discount" class="form-control" placeholder="Ex : 100" />
+            </div>
+          </div>
+          <div class="col-md-4 col-6">
+            <div class="form-group">
+              <label class="input-label" for="exampleFormControlInput1">Discount Type</label>
+              <select name="discountType" class="form-control js-select2-custom" id="discout-type">
+                <option value="percent">Percent</option>
+                <option value="amount">Amount</option>
+              </select>
+            </div>
+          </div>
+          <div class="col-md-4 col-6">
+            <div class="form-group">
+              <label class="input-label" for="exampleFormControlInput1">Max discount</label>
+              <input type="number" min="0" value="<%= item.maxDiscount %>" name="maxDiscount" class="form-control" placeholder="Ex: 100" />
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6 col-6">
+            <div class="form-group">
+              <label class="input-label" for="exampleFormControlSelect1">Category<span class="input-label-secondary">*</span></label>
+              <select name="categoryId" class="form-control js-select2-custom" id="category">
+                <option value="">---Select---</option>
+                <% for(var i = 0; i < categories.length; i++) { %>
+                <option value="<%= categories[i].id %>"><%= categories[i].name %></option>
+                <% } %>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Product Image</label><small style="color: red">* ( Ratio 1:1 )</small>
+          <div class="custom-file">
+            <input
+              type="file"
+              name="image"
+              id="customFileEg1"
+              class="custom-file-input"
+              accept=".jpg, .png, .jpeg, .gif, .bmp, .tif, .tiff|image/*"
+            />
+            <label class="custom-file-label" for="customFileEg1">Choose File</label>
+          </div>
+          <center id="image-viewer-section" class="pt-2">
+            <img style="height: 150px; border: 1px solid; border-radius: 10px" id="viewer" src="<%=item.image %>" alt="banner image" />
+          </center>
+        </div>
+      </div>
+      <hr />
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+  </div>
+</div>
+
+<script>
+  var item = JSON.parse(`<%- JSON.stringify(item)%>`);
+
+  $(document).ready(function () {
+    $('#discount-type').val(item.discountType).change();
+    $('#category').val(item.categoryId).change();
+    $('#en_hiddenArea').val(item.description);
+
+    $('#product_form').submit(function (e) {
+      e.preventDefault();
+      var formData = new FormData(this);
+      console.log(formData);
+      $.ajax({
+        url: `/items/${item.id}/edit`,
+        type: 'POST',
+        data: formData,
+        success: function (data) {
+          console.log(data);
+          if (data.ok) {
+            toastr.success(data.message);
+            setTimeout(function () {
+              window.location.href = '/items';
+            }, 1000);
+          } else {
+            toastr.error(data.message);
+          }
+        },
+        error: function (err) {
+          toastr.error(err.responseJSON.message);
+        },
+        cache: false,
+        contentType: false,
+        processData: false
+      });
+    });
+  });
+</script>
+
+<%- include('../../layout/footer.ejs'); -%>

@@ -9,7 +9,7 @@ class AdminDashboardController {
   }
 
   renderDashboard(req, res) {
-    res.render(`${this.rootModule}dashboard/dashboard`, {});
+    res.render(`${this.rootModule}dashboard/dashboard`, {titlePage: 'Dashboard'});
   }
 
 }

@@ -86,7 +86,7 @@
                     <i class="tio-settings"></i>
                   </button>
                   <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                    <a class="dropdown-item" href="#">Edit</a>
+                    <a class="dropdown-item" href="/items/<%=item.id %>/edit">Edit</a>
                     <a class="dropdown-item" onclick="deleteItem('<%= item.id %>')">Delete</a>
                     <form action="/items/22/delete" method="post" id="product-22">
                       <input type="hidden" name="_method" value="delete" />
