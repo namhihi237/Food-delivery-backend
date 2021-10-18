@@ -1,0 +1,143 @@
+<%- include('../../layout/header.ejs'); -%>
+
+<div class="page-header">
+  <div class="row">
+    <div class="col-6">
+      <h1 class="page-header-title">Buddy Zinger Combo</h1>
+    </div>
+    <div class="col-6">
+      <a href="/items" class="btn btn-primary float-right"> <i class="tio-back-ui"></i> Back </a>
+    </div>
+  </div>
+
+  <ul class="nav nav-tabs page-header-tabs">
+    <li class="nav-item">
+      <a class="nav-link active" href="javascript:"> Product Reviews </a>
+    </li>
+  </ul>
+</div>
+
+<div class="card mb-3 mb-lg-5">
+  <div class="card-body">
+    <div class="row align-items-md-center gx-md-5">
+      <div class="col-md-auto mb-3 mb-md-0">
+        <div class="d-flex align-items-center">
+          <img
+            class="avatar avatar-xxl avatar-4by3 mr-4"
+            src="<%=item.image  %> "
+            onerror="this.src='../../images/img1.jpg'"
+            alt="Image Description"
+          />
+          <div class="d-block">
+            <h4 class="display-2 text-dark mb-0"><%=item.numberOfReviews %></h4>
+            <p>
+              Of 0 Reviews
+              <span class="badge badge-soft-dark badge-pill ml-1">10</span>
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md">
+        <ul class="list-unstyled list-unstyled-py-2 mb-0">
+          <li class="d-flex align-items-center font-size-sm">
+            <span class="mr-3">5 star</span>
+            <div class="progress flex-grow-1">
+              <div class="progress-bar" role="progressbar" style="width: 0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+            </div>
+            <span class="ml-3">0</span>
+          </li>
+
+          <li class="d-flex align-items-center font-size-sm">
+            <span class="mr-3">4 star</span>
+            <div class="progress flex-grow-1">
+              <div class="progress-bar" role="progressbar" style="width: 0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+            </div>
+            <span class="ml-3">0</span>
+          </li>
+
+          <li class="d-flex align-items-center font-size-sm">
+            <span class="mr-3">3 star</span>
+            <div class="progress flex-grow-1">
+              <div class="progress-bar" role="progressbar" style="width: 0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+            </div>
+            <span class="ml-3">0</span>
+          </li>
+
+          <li class="d-flex align-items-center font-size-sm">
+            <span class="mr-3">2 star</span>
+            <div class="progress flex-grow-1">
+              <div class="progress-bar" role="progressbar" style="width: 0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+            </div>
+            <span class="ml-3">0</span>
+          </li>
+
+          <li class="d-flex align-items-center font-size-sm">
+            <span class="mr-3">1 star</span>
+            <div class="progress flex-grow-1">
+              <div class="progress-bar" role="progressbar" style="width: 0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+            </div>
+            <span class="ml-3">0</span>
+          </li>
+        </ul>
+      </div>
+      <div class="col-12">
+        <hr />
+      </div>
+      <div class="col-4 pt-2">
+        <h4 class="border-bottom"><%=item.name %></h4>
+        <span>Price : <span><%= item.price %> VND</span> </span><br />
+        <span>Tax : <span><%=item.tax || 0 %> VND</span> </span><br />
+        <span
+          >Discount : <span><%= item.discountType === 'percent' ? `${item.discount || 0} %` : `${item.discount || 0} VND` %> </span> </span
+        ><br />
+        <span>Max discount : <span><%= item.maxDiscount || 0 %> VND</span> </span><br />
+      </div>
+      <div class="col-8 pt-2 border-left">
+        <h4>Short Description :</h4>
+        <p><%= item.description %></p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="table-responsive datatable-custom">
+    <table
+      id="datatable"
+      class="table table-borderless table-thead-bordered table-nowrap card-table"
+      data-hs-datatables-options='{
+                     "columnDefs": [{
+                        "targets": [0, 3, 6],
+                        "orderable": false
+                      }],
+                     "order": [],
+                     "info": {
+                       "totalQty": "#datatableWithPaginationInfoTotalQty"
+                     },
+                     "search": "#datatableSearch",
+                     "entries": "#datatableEntries",
+                     "pageLength": 25,
+                     "isResponsive": false,
+                     "isShowPaging": false,
+                     "pagination": "datatablePagination"
+                   }'
+    >
+      <thead class="thead-light">
+        <tr>
+          <th>Reviewer</th>
+          <th>Review</th>
+          <th>Date</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </div>
+
+  <div class="card-footer">
+    <div class="row justify-content-center justify-content-sm-between align-items-sm-center">
+      <div class="col-12"></div>
+    </div>
+  </div>
+</div>
+
+<%- include('../../layout/footer.ejs'); -%>

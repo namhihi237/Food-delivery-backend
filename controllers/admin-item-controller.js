@@ -209,6 +209,35 @@ class AdminItemController {
       });
     }
   }
+
+  async viewItem(req, res) {
+    global.logger.info('AdminItemController::getItem', JSON.stringify(req.params));
+
+    try {
+      const { id } = req.params;
+
+      let item = await this.db.Items.findOne({ where: { id } });
+
+      if (!item) {
+        return res.render(this.rootModule + 'error/404', {
+          message: 'Item not found'
+        });
+      }
+
+      item = JSON.parse(JSON.stringify(item));
+
+      return res.render(this.rootModule + 'product/detail', {
+        item,
+        titlePage: 'Product detail'
+      });
+
+
+    } catch (error) {
+      return res.render(this.rootModule + 'error/404', {
+        message: 'Server error!'
+      });
+    }
+  }
 }
 
 export default AdminItemController;

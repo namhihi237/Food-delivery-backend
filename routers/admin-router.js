@@ -37,5 +37,8 @@ export default ({ db }) => {
   router.route('/items/add').post((req, res, next) => adminMiddleware.isLoggedIn(req, res, next), upload.single('image'), (req, res) => adminItemController.postCreateItem(req, res));
   router.route('/items/:id/edit').get((req, res, next) => adminMiddleware.isLoggedIn(req, res, next), upload.single('image'), (req, res) => adminItemController.editItem(req, res));
   router.route('/items/:id/edit').post((req, res, next) => adminMiddleware.isLoggedIn(req, res, next), upload.single('image'), (req, res) => adminItemController.postEditItem(req, res));
+  router.route('/items/:id').get((req, res, next) => adminMiddleware.isLoggedIn(req, res, next), (req, res) => adminItemController.viewItem(req, res));
+
+
   return router;
 }
