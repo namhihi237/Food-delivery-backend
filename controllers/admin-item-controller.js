@@ -83,6 +83,45 @@ class AdminItemController {
       return res.render(this.rootModule + 'error/404', {});
     }
   }
+
+  async postCreateItem(req, res) {
+    global.logger.info('AdminItemController::postCreateItem', JSON.stringify(req.body));
+
+    try {
+      let params = req.body;
+
+      // check required params
+      if (!params.name || !params.price || !params.description || !params.categoryId || !req.file.path) {
+        return res.status(400).send({ message: 'Missing required params' });
+      }
+
+      // check if category exists
+      let category = await this.db.Categories.findOne({ where: { id: params.categoryId } });
+
+      if (!category) {
+        return res.status(404).send({ message: 'Category not found' });
+      }
+
+      // upload image to cloudinary
+      let image = await imageUtils.uploadImageAdmin(req.file.path);
+
+      if (!image) {
+        return res.status(400).send({ message: 'Image upload failed' });
+      }
+
+      // create item
+      await this.db.Items.create({ ...params, image: image.url });
+
+      res.status(200).send({ message: 'Item created', ok: true });
+
+    } catch (error) {
+
+      return res.status(500).json({
+        ok: false,
+        message: 'Server error!',
+      });
+    }
+  }
 }
 
 export default AdminItemController;

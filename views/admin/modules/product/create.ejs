@@ -10,7 +10,7 @@
 
 <div class="row gx-2 gx-lg-3">
   <div class="col-sm-12 col-lg-12 mb-3 mb-lg-2">
-    <form action="javascript:" method="post" id="product_form" enctype="multipart/form-data">
+    <form action="/items/add" method="post" id="product_form" enctype="multipart/form-data">
       <div class="card p-4 lang_form" id="en-form">
         <div class="form-group">
           <label class="input-label" for="en_name">Name</label>
@@ -72,7 +72,7 @@
           <div class="col-md-6 col-6">
             <div class="form-group">
               <label class="input-label" for="exampleFormControlSelect1">Category<span class="input-label-secondary">*</span></label>
-              <select name="category_id" class="form-control js-select2-custom">
+              <select name="categoryId" class="form-control js-select2-custom">
                 <option value="">---Select---</option>
                 <% for(var i = 0; i < categories.length; i++) { %>
                 <option value="<%= categories[i].id %>"><%= categories[i].name %></option>
@@ -105,5 +105,37 @@
     </form>
   </div>
 </div>
+
+<script>
+  $(document).ready(function () {
+    $('#product_form').submit(function (e) {
+      e.preventDefault();
+      var formData = new FormData(this);
+      console.log(formData);
+      $.ajax({
+        url: '/items/add',
+        type: 'POST',
+        data: formData,
+        success: function (data) {
+          console.log(data);
+          if (data.ok) {
+            toastr.success(data.message);
+            setTimeout(function () {
+              window.location.href = '/items';
+            }, 1000);
+          } else {
+            toastr.error(data.message);
+          }
+        },
+        error: function (err) {
+          toastr.error(err.responseJSON.message);
+        },
+        cache: false,
+        contentType: false,
+        processData: false
+      });
+    });
+  });
+</script>
 
 <%- include('../../layout/footer.ejs'); -%>
