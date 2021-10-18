@@ -27,6 +27,7 @@ const items = [
     image: 'https://images.unsplash.com/photo-1518791841217-8f162f1e1131?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60',
     categoryId: 1,
     maxDiscount: 2,
+    discount: 0.1,
   },
   {
     name: 'Beef Burger',
@@ -35,6 +36,7 @@ const items = [
     image: 'https://images.unsplash.com/photo-1518791841217-8f162f1e1131?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60',
     categoryId: 2,
     maxDiscount: 3,
+    discount: 0.2,
   },
   {
     name: 'Chicken Burger',
@@ -43,6 +45,7 @@ const items = [
     image: 'https://images.unsplash.com/photo-1518791841217-8f162f1e1131?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60',
     categoryId: 3,
     maxDiscount: 2,
+    discount: 0.12,
   },
   {
     name: 'Beef Burger',
@@ -51,6 +54,7 @@ const items = [
     image: 'https://images.unsplash.com/photo-1518791841217-8f162f1e1131?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60',
     categoryId: 1,
     maxDiscount: 4,
+    discount: 0.13,
   },
 ];
 

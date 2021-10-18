@@ -54,11 +54,11 @@
           </thead>
           <tbody id="set-rows">
             <% items.forEach(function(item, index){ %>
-            <tr>
+            <tr id="item-<%=item.id  %>">
               <td><%= index + 1 %></td>
               <td>
                 <span class="d-block font-size-sm text-body">
-                  <a href="https://demo.6amtech.com/restaurant/admin/product/view/22"> <%= item.name %> </a>
+                  <a href="#"> <%= item.name %> </a>
                 </span>
               </td>
               <td>
@@ -90,8 +90,8 @@
                     <i class="tio-settings"></i>
                   </button>
                   <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                    <a class="dropdown-item" href="https://demo.6amtech.com/restaurant/admin/product/edit/22">Edit</a>
-                    <a class="dropdown-item" href="javascript:" onclick="form_alert('product-22','Want to delete this item ?')">Delete</a>
+                    <a class="dropdown-item" href="#">Edit</a>
+                    <a class="dropdown-item" onclick="deleteItem('<%= item.id %>')">Delete</a>
                     <form action="/items/22/delete" method="post" id="product-22">
                       <input type="hidden" name="_method" value="delete" />
                     </form>
@@ -129,6 +129,20 @@
       } else {
         toastr.error(data.message);
       }
+    });
+  }
+
+  function deleteItem(id) {
+    console.log('delete');
+    form_alert(null, 'Want to delete this item ?', () => {
+      $.post(`/items/${id}/delete`, {}).done(function (data) {
+        if (data.ok) {
+          toastr.success(data.message);
+          $(`#item-${id}`).remove();
+        } else {
+          toastr.error(data.message);
+        }
+      });
     });
   }
 </script>

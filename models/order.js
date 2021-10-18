@@ -16,10 +16,6 @@ const Order = sequelize.define('Order', {
     type: Sequelize.STRING,
     allowNull: true,
   },
-  voucherCode: {
-    type: Sequelize.FLOAT,
-    allowNull: true,
-  },
   discount: { //the total discount of the Order based on the promo code
     type: Sequelize.FLOAT,
     allowNull: true,
@@ -76,7 +72,7 @@ const Order = sequelize.define('Order', {
   },
   status: {
     type: Sequelize.ENUM,
-    values: ['NEW', 'SHIPPING',  'CANCELLED', 'RETURNED', 'COMPLETED'],
+    values: ['NEW', 'SHIPPING', 'CANCELLED', 'RETURNED', 'COMPLETED'],
     allowNull: false,
     defaultValue: 'new',
   },

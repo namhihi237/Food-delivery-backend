@@ -52,7 +52,16 @@ const Item = sequelize.define('Item', {
   isActive: {
     type: Sequelize.BOOLEAN,
     defaultValue: true,
+  },
+  discount: {
+    type: Sequelize.FLOAT,
+    defaultValue: 0,
+  },
+  discountType: {
+    type: Sequelize.ENUM('percent', 'amount'),
+    defaultValue: 'percent',
   }
+
 });
 
 Item.associate = models => {
