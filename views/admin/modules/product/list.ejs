@@ -13,7 +13,7 @@
       <div class="card-header">
         <div class="row" style="width: 100%">
           <div class="col-8 mb-3 mb-lg-0">
-            <form action="https://demo.6amtech.com/restaurant/admin/product/list" method="GET">
+            <form action="/items" method="GET">
               <div class="input-group input-group-merge input-group-flush">
                 <div class="input-group-prepend">
                   <div class="input-group-text">
@@ -35,9 +35,7 @@
             </form>
           </div>
           <div class="col-4 mb-3 mb-lg-0">
-            <a href="https://demo.6amtech.com/restaurant/admin/product/add-new" class="btn btn-primary pull-right btn-block"
-              ><i class="tio-add-circle"></i> Add New Product</a
-            >
+            <a href="/items/add" class="btn btn-primary pull-right btn-block"><i class="tio-add-circle"></i> Add New Product</a>
           </div>
         </div>
       </div>
@@ -55,31 +53,30 @@
             </tr>
           </thead>
           <tbody id="set-rows">
+            <% items.forEach(function(item, index){ %>
             <tr>
-              <td>1</td>
+              <td><%= index + 1 %></td>
               <td>
                 <span class="d-block font-size-sm text-body">
-                  <a href="https://demo.6amtech.com/restaurant/admin/product/view/22"> Buddy Zinger Combo </a>
+                  <a href="https://demo.6amtech.com/restaurant/admin/product/view/22"> <%= item.name %> </a>
                 </span>
               </td>
               <td>
                 <div style="height: 100px; width: 100px; overflow-x: hidden; overflow-y: hidden">
                   <img
-                    src="https://demo.6amtech.com/restaurant/storage/app/public/product/2021-02-26-60389495f26f9.png"
+                    src="<%= item.image %> "
                     style="width: 100px"
                     onerror="this.src='https://demo.6amtech.com/restaurant/public/assets/admin/img/160x160/img2.jpg'"
                   />
                 </div>
               </td>
               <td>
-                <div
-                  style="padding: 10px; border: 1px solid; cursor: pointer"
-                  onclick="location.href='https://demo.6amtech.com/restaurant/admin/product/status/22/0'"
-                >
-                  <span class="legend-indicator bg-success"></span>Active
+                <div style="padding: 10px; border: 1px solid; cursor: pointer" onclick="changeStatusItem('<%= item.id %>')">
+                  <span id="status-<%=item.id %>" class="legend-indicator <%= item.isActive ? 'bg-success' : 'bg-danger' %>"></span><%=
+                  item.isActive ? 'Active' : 'Disabled' %>
                 </div>
               </td>
-              <td>12 $</td>
+              <td><%= item.price %> VND</td>
               <td>
                 <div class="dropdown">
                   <button
@@ -95,14 +92,14 @@
                   <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                     <a class="dropdown-item" href="https://demo.6amtech.com/restaurant/admin/product/edit/22">Edit</a>
                     <a class="dropdown-item" href="javascript:" onclick="form_alert('product-22','Want to delete this item ?')">Delete</a>
-                    <form action="https://demo.6amtech.com/restaurant/admin/product/delete/22" method="post" id="product-22">
-                      <input type="hidden" name="_token" value="ywdzrWLov283hoPzF696UkfXGGp2hhlFGPS7iF1I" />
+                    <form action="/items/22/delete" method="post" id="product-22">
                       <input type="hidden" name="_method" value="delete" />
                     </form>
                   </div>
                 </div>
               </td>
             </tr>
+            <% }); %>
           </tbody>
         </table>
         <hr />
@@ -115,5 +112,25 @@
     </div>
   </div>
 </div>
+
+<script>
+  function changeStatusItem(id) {
+    console.log('change');
+    $.post(`/items/${id}/change-status`, {}).done(function (data) {
+      if (data.ok) {
+        let status = $(`#status-${id}`);
+        if (status.hasClass('bg-success')) {
+          status.removeClass('bg-success');
+          status.addClass('bg-danger');
+        } else {
+          status.removeClass('bg-danger');
+          status.addClass('bg-success');
+        }
+      } else {
+        toastr.error(data.message);
+      }
+    });
+  }
+</script>
 
 <%- include('../../layout/footer.ejs'); -%>

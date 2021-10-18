@@ -31,5 +31,6 @@ export default ({ db }) => {
 
   // item routes
   router.route('/items').get((req, res, next) => adminMiddleware.isLoggedIn(req, res, next), (req, res) => adminItemController.listItems(req, res));
+  router.route('/items/:id/change-status').post((req, res, next) => adminMiddleware.isLoggedIn(req, res, next), (req, res) => adminItemController.changeStatusItem(req, res));
   return router;
 }
