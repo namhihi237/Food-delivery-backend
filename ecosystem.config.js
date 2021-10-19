@@ -13,10 +13,6 @@ module.exports = {
       NODE_ENV: "production",
       PORT: 8000
     },
-    env_development: { // khi deploy với option --env development
-      NODE_ENV: "development",
-      PORT: 8000
-    },
   }],
 
   deploy: {
