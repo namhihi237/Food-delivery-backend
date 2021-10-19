@@ -203,6 +203,7 @@ class AdminItemController {
       return res.status(200).send({ message: 'Item updated', ok: true });
 
     } catch (error) {
+      global.logger.error('AdminItemController::postEditItem', error);
       return res.status(500).json({
         ok: false,
         message: 'Server error!',

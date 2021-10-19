@@ -13,7 +13,8 @@
     "init-db": "node -r esm ./migrations/init-db.js",
     "ssh-azure": "ssh poppy237@20.37.38.82",
     "deploy-heroku": "git push heroku main",
-    "log": "heroku logs --tail"
+    "log": "heroku logs --tail",
+    "deploy": "pm2 deploy ecosystem.config.js production"
   },
   "dependencies": {
     "apollo-server-express": "^3.3.0",
