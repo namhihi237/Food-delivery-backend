@@ -23,8 +23,8 @@ const Transaction = sequelize.define('Transaction', {
   },
   status: {
     type: Sequelize.ENUM,
-    values: ['NEW', 'CANCELLED', 'FAILED', 'PENDING', 'DECLINED', 'SUCCESS'],
-    defaultValue: 'NEW',
+    values: ['CANCELLED', 'FAILED', 'PENDING', 'DECLINED', 'SUCCESS'],
+    defaultValue: 'PENDING',
   },
   content: {
     type: Sequelize.TEXT,

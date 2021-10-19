@@ -1,18 +1,19 @@
 const OrderEnum = Object.freeze({
-  NEW: "NEW",
-  SHIPPING: "SHIPPING",
-  CANCELLED: "CANCELLED",
-  RETURNED: "RETURNED",
-  COMPLETED: "COMPLETED",
+  PENDING: "pending",
+  CONFIRM: "confirm",
+  PROCESSING: "processing",
+  DELIVERY: "delivery",
+  RETURNED: "returned",
+  CANCELED: "canceled",
+  COMPLETED: "completed",
 });
 
 const TransactionEnum = Object.freeze({
-  NEW: "NEW",
   PENDING: "PENDING",
   SUCCESS: "SUCCESS",
   FAILED: "FAILED",
-  COMPLETED: "COMPLETED",
   DECLINED: "DECLINED",
+  CANCELED: "CANCELED",
 });
 
 const MethodPaymentEnum = Object.freeze({

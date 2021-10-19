@@ -22,10 +22,6 @@ const CartItem = sequelize.define('CartItem', {
 });
 
 CartItem.associate = models => {
-  CartItem.belongsTo(models.Items);
-}
-
-CartItem.associate = models => {
   CartItem.belongsTo(models.Items, { as: 'items', foreignKey: 'itemId' });
 }
 

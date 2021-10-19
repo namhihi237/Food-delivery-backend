@@ -36,7 +36,7 @@ const items = [
     image: 'https://images.unsplash.com/photo-1518791841217-8f162f1e1131?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60',
     categoryId: 2,
     maxDiscount: 3,
-    discount: 0.2,
+    discount: 10,
   },
   {
     name: 'Chicken Burger',
@@ -45,7 +45,7 @@ const items = [
     image: 'https://images.unsplash.com/photo-1518791841217-8f162f1e1131?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60',
     categoryId: 3,
     maxDiscount: 2,
-    discount: 0.12,
+    discount: 12,
   },
   {
     name: 'Beef Burger',
@@ -54,7 +54,7 @@ const items = [
     image: 'https://images.unsplash.com/photo-1518791841217-8f162f1e1131?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60',
     categoryId: 1,
     maxDiscount: 4,
-    discount: 0.13,
+    discount: 13,
   },
 ];
 
@@ -97,7 +97,6 @@ const initDb = async () => {
     await db.Messages.destroy({ where: {} });
     await db.Notifications.destroy({ where: {} });
     await db.Transactions.destroy({ where: {} });
-    await db.Tags.destroy({ where: {} });
     await db.CodeResets.destroy({ where: {} });
     await db.Vouchers.destroy({ where: {} });
     await db.CartItems.destroy({ where: {} });

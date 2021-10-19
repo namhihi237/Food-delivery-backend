@@ -60,13 +60,19 @@ const Item = sequelize.define('Item', {
   discountType: {
     type: Sequelize.ENUM('percent', 'amount'),
     defaultValue: 'percent',
-  }
+  },
+  tax: {
+    type: Sequelize.FLOAT,
+    defaultValue: 0,
+  },
+  taxType: {
+    type: Sequelize.ENUM('percent', 'amount'),
+    defaultValue: 'percent',
+  },
 
 });
 
 Item.associate = models => {
-  Item.belongsToMany(models.Tags, { through: 'ItemTags' });
-  // Item.hasMany(models.OrderItems, { as: 'orderItems' });
   Item.hasMany(models.Reviews, { as: 'reviews' });
   Item.belongsTo(models.Categories, { as: 'categories', foreignKey: 'categoryId' });
 }

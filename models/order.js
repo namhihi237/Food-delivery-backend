@@ -72,9 +72,9 @@ const Order = sequelize.define('Order', {
   },
   status: {
     type: Sequelize.ENUM,
-    values: ['NEW', 'SHIPPING', 'CANCELLED', 'RETURNED', 'COMPLETED'],
+    values: ['pending', 'confirm', 'processing', 'delivery', 'returned', 'failed', 'cancelled', 'completed'],
     allowNull: false,
-    defaultValue: 'new',
+    defaultValue: 'pending',
   },
   note: {
     type: Sequelize.STRING(250),
@@ -83,7 +83,6 @@ const Order = sequelize.define('Order', {
 });
 
 Order.associate = models => {
-  Order.belongsToMany(models.Items, { through: 'ItemTags' });
   Order.hasMany(models.OrderItems, { as: 'orderItems' });
 }
 

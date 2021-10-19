@@ -134,7 +134,7 @@ const cartMutation = {
       if (method === 'COD') {
         order = await context.db.Orders.create({
           UserId: context.user.id,
-          status: OrderEnum.NEW,
+          status: OrderEnum.PENDING,
           subTotal,
           shipping,
           total,
@@ -152,7 +152,7 @@ const cartMutation = {
         // create transaction
         await context.db.Transactions.create({
           OrderId: order.id,
-          status: TransactionEnum.NEW,
+          status: TransactionEnum.PENDING,
           methodPayment: MethodPaymentEnum.COD,
           content: '',
         });
