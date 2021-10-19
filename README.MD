@@ -57,6 +57,9 @@ After installing node, this project will need yarn too, so just run the followin
 
 add file `.env` then config like .env.example.
 
+- install mysql 5.7
+- install redis
+
 ## Running the project
 
     $ yarn asyn-db  # run the database migration
