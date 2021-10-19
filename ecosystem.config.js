@@ -22,7 +22,7 @@ module.exports = {
       ref: 'origin/main', // branch để pull source
       repo: 'git@github.com:namhihi237/Food-delivery-backend.git', // repo của project
       path: '/home/poppy237/food', // sẽ deploy vào thư mục này
-      'post-deploy': 'yarn install && pm2 startOrRestart ecosystem.config.js --env production' // cmd để deploy
+      'post-deploy': 'npm install && pm2 startOrRestart ecosystem.config.js --env production' // cmd để deploy
     },
   }
 };
