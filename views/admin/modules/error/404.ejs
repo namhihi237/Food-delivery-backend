@@ -30,16 +30,21 @@
         <div class="row justify-content-center">
           <div class="col-md-12 text-center">
             <span class="display-1 d-block"><%= status ? status : '404' %> </span>
-            <% if (!message) { %}>
+            <% if (!message) { %>
             <div class="mb-4 lead">The page you are looking for was not found.</div>
             <% } else {%>
             <div class="mb-4 lead"><%= message %></div>
             <% } %>
-            <a class="btn btn-link" href="/dashboard">Back to Home</a>
+            <a class="btn btn-link" onclick="goBack()" href="javascript:">Back</a>
           </div>
         </div>
       </div>
     </div>
+    <script>
+      function goBack() {
+        window.history.back();
+      }
+    </script>
     <style>
       body {
         background: #dedede;

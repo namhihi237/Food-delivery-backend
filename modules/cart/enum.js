@@ -9,11 +9,8 @@ const OrderEnum = Object.freeze({
 });
 
 const TransactionEnum = Object.freeze({
-  PENDING: "PENDING",
-  SUCCESS: "SUCCESS",
-  FAILED: "FAILED",
-  DECLINED: "DECLINED",
-  CANCELED: "CANCELED",
+  PAID: "paid",
+  UNPAID: "unpaid",
 });
 
 const MethodPaymentEnum = Object.freeze({

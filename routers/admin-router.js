@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { AdminAuthenticationController, AdminDashboardController, AdminCategoryController, AdminItemController } from '../controllers';
+import { AdminAuthenticationController, AdminDashboardController, AdminCategoryController, AdminItemController, AdminOrderController } from '../controllers';
 import AdminMiddleware from '../middlewares/adminMiddleware';
 import { upload } from "../utils";
 
@@ -10,6 +10,7 @@ export default ({ db }) => {
   const adminDashboardController = new AdminDashboardController(db);
   const adminCategoryController = new AdminCategoryController(db);
   const adminItemController = new AdminItemController(db);
+  const adminOrderController = new AdminOrderController(db);
 
   const adminMiddleware = new AdminMiddleware(db);
   // authentication routes
@@ -38,6 +39,10 @@ export default ({ db }) => {
   router.route('/items/:id/edit').get((req, res, next) => adminMiddleware.isLoggedIn(req, res, next), upload.single('image'), (req, res) => adminItemController.editItem(req, res));
   router.route('/items/:id/edit').post((req, res, next) => adminMiddleware.isLoggedIn(req, res, next), upload.single('image'), (req, res) => adminItemController.postEditItem(req, res));
   router.route('/items/:id').get((req, res, next) => adminMiddleware.isLoggedIn(req, res, next), (req, res) => adminItemController.viewItem(req, res));
+
+
+  // order routes
+  router.route('/orders').get((req, res, next) => adminMiddleware.isLoggedIn(req, res, next), (req, res) => adminOrderController.listOrders(req, res));
 
 
   return router;

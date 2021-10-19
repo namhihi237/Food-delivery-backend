@@ -53,9 +53,7 @@ const Branch = sequelize.define('Branch', {
 });
 
 Branch.associate = models => {
-  Branch.hasMany(models.Orders, {
-    foreignKey: 'branchId'
-  });
+  // Branch.hasMany(models.Orders, { as: 'orders' });
 }
 
 export default Branch;

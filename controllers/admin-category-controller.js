@@ -18,7 +18,10 @@ class AdminCategoryController {
       });
 
     } catch (error) {
-      res.render(`${this.rootModule}error/404`);
+      res.render(this.rootModule + 'error/404', {
+        status: 500,
+        message: 'Internal Server Error'
+      });
     }
   }
 
@@ -47,7 +50,10 @@ class AdminCategoryController {
         ok: true,
       });
     } catch (error) {
-      res.render(`${this.rootModule}error/404`);
+      res.render(this.rootModule + 'error/404', {
+        status: 500,
+        message: 'Internal Server Error'
+      });
     }
   }
 
@@ -137,7 +143,7 @@ class AdminCategoryController {
         return res.render(`${this.rootModule}error/404`, { message: 'Category not found' });
       }
 
-      return res.render(this.rootModule + 'category/edit', { category , titlePage: 'Edit Category' });
+      return res.render(this.rootModule + 'category/edit', { category, titlePage: 'Edit Category' });
 
     } catch (error) {
       return res.render(`${this.rootModule}error/404`);

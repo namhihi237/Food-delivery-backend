@@ -41,9 +41,10 @@ const Shipper = sequelize.define('Shipper', {
 });
 
 Shipper.associate = models => {
-  Shipper.hasMany(models.Orders, {
-    foreignKey: 'shipperId'
-  });
+  // Shipper.hasMany(models.Orders, {
+  //   foreignKey: 'shipperId'
+  // });
+  // Shipper.hasMany(models.Orders, { as: 'orders' });
 }
 
 export default Shipper;

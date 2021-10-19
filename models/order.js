@@ -8,9 +8,9 @@ import { sequelize } from './db.js';
  */
 const Order = sequelize.define('Order', {
   id: {
-    type: Sequelize.UUID,
+    type: Sequelize.INTEGER,
     primaryKey: true,
-    defaultValue: Sequelize.UUIDV1,
+    autoIncrement: true
   },
   voucherCode: {
     type: Sequelize.STRING,
@@ -83,7 +83,13 @@ const Order = sequelize.define('Order', {
 });
 
 Order.associate = models => {
+  Order.belongsTo(models.Users, { as: 'User' });
+  Order.belongsTo(models.Branches, { as: 'Branch' });
+  Order.belongsTo(models.Shippers, { as: 'Shipper' });
+
+  Order.hasOne(models.Transactions);
   Order.hasMany(models.OrderItems, { as: 'orderItems' });
+
 }
 
 export default Order;

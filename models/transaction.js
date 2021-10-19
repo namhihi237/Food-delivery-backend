@@ -8,9 +8,9 @@ import { sequelize } from './db.js';
  */
 const Transaction = sequelize.define('Transaction', {
   id: {
-    type: Sequelize.UUID,
+    type: Sequelize.INTEGER,
     primaryKey: true,
-    defaultValue: Sequelize.UUIDV1,
+    autoIncrement: true,
   },
   code: {
     type: Sequelize.STRING(100),
@@ -23,8 +23,7 @@ const Transaction = sequelize.define('Transaction', {
   },
   status: {
     type: Sequelize.ENUM,
-    values: ['CANCELLED', 'FAILED', 'PENDING', 'DECLINED', 'SUCCESS'],
-    defaultValue: 'PENDING',
+    values: ['paid', 'unpaid'],
   },
   content: {
     type: Sequelize.TEXT,
@@ -33,8 +32,7 @@ const Transaction = sequelize.define('Transaction', {
 });
 
 Transaction.associate = models => {
-  Transaction.belongsTo(models.Users, { foreignKey: 'userId', as: 'users' });
-  Transaction.belongsTo(models.Orders, { foreignKey: 'orderId', as: 'orders', });
+  Transaction.belongsTo(models.Orders);
 }
 
 export default Transaction;

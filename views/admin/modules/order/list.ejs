@@ -1,0 +1,187 @@
+<%- include('../../layout/header.ejs'); -%>
+
+<div class="page-header">
+  <div class="row align-items-center mb-3">
+    <div class="col-9">
+      <h1 class="page-header-title">Orders <span class="badge badge-soft-dark ml-2"><%= count %> </span></h1>
+    </div>
+    <div class="col-3">
+      <select class="custom-select custom-select-sm text-capitalize" name="branch" onchange="filter_branch_orders(this.value)">
+        <option disabled>--- Select Branch ---</option>
+        <option value="all">All branches</option>
+        <% branches.forEach(branch => { %>
+        <option value="<%- branch.id %>"><%- branch.name %></option>
+        <% }); %>
+      </select>
+    </div>
+  </div>
+
+  <div class="js-nav-scroller hs-nav-scroller-horizontal">
+    <span class="hs-nav-scroller-arrow-prev" style="display: none">
+      <a class="hs-nav-scroller-arrow-link" href="javascript:;">
+        <i class="tio-chevron-left"></i>
+      </a>
+    </span>
+    <span class="hs-nav-scroller-arrow-next" style="display: none">
+      <a class="hs-nav-scroller-arrow-link" href="javascript:;">
+        <i class="tio-chevron-right"></i>
+      </a>
+    </span>
+
+    <ul class="nav nav-tabs page-header-tabs">
+      <li class="nav-item">
+        <a class="nav-link active" href="#">Order List</a>
+      </li>
+    </ul>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-header">
+    <div class="row justify-content-between align-items-center flex-grow-1">
+      <div class="col-lg-4 mb-3 mb-lg-0">
+        <form action="https://demo.6amtech.com/restaurant/admin/orders/list/all" method="GET">
+          <div class="input-group input-group-merge input-group-flush">
+            <div class="input-group-prepend">
+              <div class="input-group-text">
+                <i class="tio-search"></i>
+              </div>
+            </div>
+            <input
+              id="datatableSearch_"
+              type="search"
+              name="search"
+              class="form-control"
+              placeholder="Search"
+              aria-label="Search"
+              value=""
+              required
+            />
+            <button type="submit" class="btn btn-primary">search</button>
+          </div>
+        </form>
+      </div>
+      <div class="col-lg-6">
+        <a href="https://demo.6amtech.com/restaurant/admin/orders/export" class="btn btn-secondary float-right"
+          ><i class="tio-pages"></i> Bulk Export</a
+        >
+      </div>
+    </div>
+  </div>
+
+  <div class="table-responsive datatable-custom">
+    <table class="table table-hover table-borderless table-thead-bordered table-nowrap table-align-middle card-table" style="width: 100%">
+      <thead class="thead-light">
+        <tr>
+          <th class="">#</th>
+          <th class="table-column-pl-0">Order</th>
+          <th>Date</th>
+          <th>Customer</th>
+          <th>Branch</th>
+          <th>Payment Status</th>
+          <th>Total</th>
+          <th>Order Status</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody id="set-rows"></tbody>
+    </table>
+  </div>
+
+  <div class="card-footer">
+    <div class="row justify-content-center justify-content-sm-between align-items-sm-center">
+      <div class="col-sm-auto">
+        <div class="d-flex justify-content-center justify-content-sm-end">
+          <nav>
+            <ul class="pagination">
+              <li class="page-item disabled" aria-disabled="true" aria-label="&laquo; Previous">
+                <span class="page-link" aria-hidden="true">&lsaquo;</span>
+              </li>
+              <li class="page-item active" aria-current="page"><span class="page-link">1</span></li>
+              <li class="page-item"><a class="page-link" href="https://demo.6amtech.com/restaurant/admin/orders/list/all?page=2">2</a></li>
+              <li class="page-item">
+                <a
+                  class="page-link"
+                  href="https://demo.6amtech.com/restaurant/admin/orders/list/all?page=2"
+                  rel="next"
+                  aria-label="Next &raquo;"
+                  >&rsaquo;</a
+                >
+              </li>
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+  var orders = JSON.parse(`<%- JSON.stringify(orders) %>`);
+
+  const statuses = {
+    pending: 'info',
+    processing: 'warning',
+    delivery: 'success',
+    cancelled: 'secondary',
+    returned: 'danger',
+    failed: 'danger',
+    completed: 'success'
+  };
+
+  const payments = {
+    paid: 'success',
+    unpaid: 'danger'
+  };
+
+  $(document).ready(function () {
+    let rows = '';
+    orders.forEach((order, index) => {
+      rows += `
+      <tr class="status-confirmed class-all">
+        <td class="">1</td>
+        <td class="table-column-pl-0">
+          <a href="#">${order.id}</a>
+        </td>
+        <td>${formatDate(order.createdAt)}</td>
+        <td>
+          <a class="text-body text-capitalize" href="#">${order.name}</a>
+        </td>
+        <td>
+          <label class="badge badge-soft-primary">Main Branch</label>
+        </td>
+        <td>
+          <span class="badge badge-soft-${payments[order.Transaction?.status]}"> <span class="legend-indicator bg-${
+        payments[order.Transaction?.status]
+      }"></span>${order.Transaction?.status}</span>
+        </td>
+        <td>${order.total} VND</td>
+        <td class="text-capitalize">
+          <span class="badge badge-soft-${statuses[order.status]} ml-2 ml-sm-3"> <span class="legend-indicator bg-${
+        statuses[order.status]
+      }"></span>${order.status}</span>
+        </td>
+        <td>
+          <div class="dropdown">
+            <button
+              class="btn btn-outline-secondary dropdown-toggle"
+              type="button"
+              id="dropdownMenuButton"
+              data-toggle="dropdown"
+              aria-haspopup="true"
+              aria-expanded="false"
+            >
+              <i class="tio-settings"></i>
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+              <a class="dropdown-item" href="#"><i class="tio-visible"></i> View</a>
+              <a class="dropdown-item" target="_blank" href="#"><i class="tio-download"></i> Invoice</a>
+            </div>
+          </div>
+        </td>
+      </tr>`;
+    });
+
+    $('#set-rows').append(rows);
+  });
+</script>
+<%- include('../../layout/footer.ejs'); -%>

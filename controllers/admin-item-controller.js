@@ -18,7 +18,10 @@ class AdminItemController {
       });
 
     } catch (error) {
-      res.render(this.rootModule + 'error/404', {})
+      res.render(this.rootModule + 'error/404', {
+        status: 500,
+        message: 'Internal Server Error'
+      });
     }
   }
 

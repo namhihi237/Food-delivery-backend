@@ -132,6 +132,9 @@ const cartMutation = {
       // create order
       let order;
       if (method === 'COD') {
+        global.logger.info('cartMutation::checkout::order' + JSON.stringify({ total, shipping, discount, grandTotal, subTotal }));
+        // create transaction
+
         order = await context.db.Orders.create({
           UserId: context.user.id,
           status: OrderEnum.PENDING,
@@ -146,16 +149,18 @@ const cartMutation = {
           phoneNumber: user.phoneNumber,
           address: user.address,
           name: user.fullName,
-          deliveryTime
+          deliveryTime,
         }, { transaction });
 
-        // create transaction
+        order = JSON.parse(JSON.stringify(order));
+
         await context.db.Transactions.create({
-          OrderId: order.id,
-          status: TransactionEnum.PENDING,
+          status: TransactionEnum.UNPAID,
           methodPayment: MethodPaymentEnum.COD,
           content: '',
-        });
+          OrderId: order.id,
+        }, { transaction });
+
 
       } else if (method === 'ONLINE') {
         // Not implemented
@@ -178,16 +183,16 @@ const cartMutation = {
       await context.db.CartItems.destroy({ where: { UserId: context.user.id }, transaction });
 
       // delete voucher
-      await context.db.Vouchers.destroy({ where: { id: voucher.id }, transaction });
+      voucher && await context.db.Vouchers.destroy({ where: { id: voucher.id }, transaction });
 
       transaction.commit();
 
       return order;
     } catch (error) {
+      console.log(error);
       if (transaction) transaction.rollback();
       throw error;
     }
-
   }
 }
 
@@ -204,7 +209,7 @@ async function calculateDeliveryTime() {
 
 
 function calculateDiscount(voucher, subTotal) {
-  global.logger.info('cartMutation::calculateDiscount' + JSON.stringify(voucher) + subTotal);
+  global.logger.info('cartMutation::calculateDiscount: ' + JSON.stringify({ voucher, subTotal }));
   let discount = 0;
 
   if (voucher) {
@@ -225,8 +230,8 @@ function calculateDiscount(voucher, subTotal) {
         discount = voucher.discount;
         break;
     }
-
-    return discount;
   }
+  return discount;
+
 }
 export default cartMutation;
