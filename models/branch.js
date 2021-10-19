@@ -13,7 +13,7 @@ const Branch = sequelize.define('Branch', {
     unique: true,
     autoIncrement: true
   },
-  username: {
+  userName: {
     type: Sequelize.STRING(50),
     allowNull: false,
     unique: true
@@ -48,7 +48,7 @@ const Branch = sequelize.define('Branch', {
   },
   lastLogin: {
     type: Sequelize.DATE,
-    allowNull: false
+    allowNull: true
   }
 });
 

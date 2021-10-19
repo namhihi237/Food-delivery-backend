@@ -1,6 +1,5 @@
 import models from '../models';
 import { bcryptUtils } from '../utils';
-
 const categories = [
   {
     name: 'Fast Food',
@@ -77,6 +76,29 @@ let vouchers = [
   }
 ];
 
+let branches = [
+  {
+    userName: "branch1",
+    name: 'Branch 1',
+    address: '120 Nguyen Luong Bang, Hoa Khanh Bac, Lien Chieu, Da Nang',
+    phoneNumber: '+84989402047',
+    latitude: '16.06789',
+    longitude: '108.23456',
+    isActive: true,
+    coverage: 3
+  },
+  {
+    name: 'Branch 2',
+    userName: "branch2",
+    address: '144 Nguyen Luong Bang, Hoa Khanh Bac, Lien Chieu, Da Nang',
+    phoneNumber: '+84989402047',
+    latitude: '16.06789',
+    longitude: '108.23456',
+    isActive: true,
+    coverage: 5
+  }
+]
+
 /**
  * Force initialize database. the old table will be replace with new structure
  */
@@ -132,7 +154,12 @@ const initDb = async () => {
       { UserId: user.id, itemId: itemsCreate[1].id, quantity: 3, }
     ]);
 
+    // create branch
+    branches = branches.map(branch => {
+      return { ...branch, password }
+    });
 
+    await db.Branches.bulkCreate(branches);
 
     await db.sequelize.query('SET FOREIGN_KEY_CHECKS = 1');
     console.log('Init database success!');
