@@ -59,11 +59,15 @@ add file `.env` then config like .env.example.
 
 ## Running the project
 
-    $ yarn asyn-db
-    $ yarn yarn init-admin
-    $ yarn init-db
-    $ yarn start
+    $ yarn asyn-db  # run the database migration
+    $ yarn yarn init-admin # create the admin user
+    $ yarn init-db # create the database migration
+    $ yarn start #start the server
 
 ## deploy
 
-    $ pm2 start app.js --node-args="-r esm"
+    # config ref :  https://chungtran4078.github.io/deploy-nodejs-app-using-nginx-pm2/
+
+    $ Update file `ecosystem.config.js`
+
+    $ yarn deploy
