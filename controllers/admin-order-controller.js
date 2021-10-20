@@ -11,6 +11,9 @@ class AdminOrderController {
     global.logger.info('AdminOrderController::listOrders', JSON.stringify(req.query));
 
     try {
+      let { page = 1 } = req.query;
+      const limit = 6;
+      let offset = (page - 1) * limit;
 
       let options = {
         include: [{
@@ -23,10 +26,13 @@ class AdminOrderController {
         }, {
           model: this.db.Transactions,
           as: 'Transaction',
-        }]
+        }],
       };
 
       let count = await this.db.Orders.count(options);
+
+      options.limit = limit;
+      options.offset = offset;
 
       let orders = await this.db.Orders.findAll(options);
 
@@ -40,6 +46,9 @@ class AdminOrderController {
         orders,
         branches,
         count,
+        limit,
+        totalPage: Math.ceil(count / limit),
+        currentPage: page,
         titlePage: 'List of Orders'
       });
     } catch (error) {

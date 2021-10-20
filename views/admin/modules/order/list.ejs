@@ -97,16 +97,13 @@
               <li class="page-item disabled" aria-disabled="true" aria-label="&laquo; Previous">
                 <span class="page-link" aria-hidden="true">&lsaquo;</span>
               </li>
-              <li class="page-item active" aria-current="page"><span class="page-link">1</span></li>
-              <li class="page-item"><a class="page-link" href="https://demo.6amtech.com/restaurant/admin/orders/list/all?page=2">2</a></li>
+              <% if (totalPage <= 3) { for(let i = 1; i <= totalPage; i++) {%>
+              <li class="page-item <% if (i == currentPage) {%> active <% } %>">
+                <a class="page-link" href="/orders?page=<%= i %>"> <%= i %> </a>
+              </li>
+              <% } }%>
               <li class="page-item">
-                <a
-                  class="page-link"
-                  href="https://demo.6amtech.com/restaurant/admin/orders/list/all?page=2"
-                  rel="next"
-                  aria-label="Next &raquo;"
-                  >&rsaquo;</a
-                >
+                <a class="page-link" href="#" rel="next" aria-label="Next &raquo;">&rsaquo;</a>
               </li>
             </ul>
           </nav>
@@ -117,6 +114,10 @@
 </div>
 <script>
   var orders = JSON.parse(`<%- JSON.stringify(orders) %>`);
+  var totalPage = JSON.parse(`<%- JSON.stringify(totalPage) %>`);
+  var currentPage = JSON.parse(`<%- JSON.stringify(currentPage) %>`);
+  var count = JSON.parse(`<%- JSON.stringify(count) %>`);
+  var limit = JSON.parse(`<%- JSON.stringify(limit) %>`);
 
   const statuses = {
     pending: 'info',
@@ -138,7 +139,7 @@
     orders.forEach((order, index) => {
       rows += `
       <tr class="status-confirmed class-all">
-        <td class="">1</td>
+        <td class="">${limit * (currentPage - 1) + index + 1}</td>
         <td class="table-column-pl-0">
           <a href="#">${order.id}</a>
         </td>
